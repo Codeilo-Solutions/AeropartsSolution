@@ -8,9 +8,11 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+.mainContent {
+  flex-grow: 1;
 }
