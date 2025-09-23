@@ -176,7 +176,7 @@ export default function Index() {
               Supplying premium aircraft components for private and commercial
               fleets worldwide.
             </p>
-            <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto">
+            <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto mt-4">
               <input
                 type="text"
                 placeholder="Enter parts number or name here.."
