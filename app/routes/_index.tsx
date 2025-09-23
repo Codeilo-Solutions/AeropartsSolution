@@ -25,9 +25,7 @@ import company12Img from "../../assets/images/company12.png";
 import company13Img from "../../assets/images/company13.png";
 import company14Img from "../../assets/images/company14.png";
 import "./_index/style.css";
-import splideDefault from "@splidejs/react-splide";
-import autoScrollDefault from "@splidejs/splide-extension-auto-scroll";
-import "@splidejs/react-splide/css";
+import { useSafeSplide } from "~/components/SafeSplide";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -37,40 +35,44 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Index() {
-  const { Splide, SplideSlide } = splideDefault;
-  const { AutoScroll } = autoScrollDefault;
+  const { Splide, SplideSlide, AutoScroll } = useSafeSplide();
   const planeRef = useRef<HTMLImageElement>(null);
   const bgCloudsRef = useRef<HTMLImageElement>(null);
   const cloudsRef = useRef<HTMLImageElement>(null);
-  useGSAP(() => {
-    if (planeRef.current) {
-      const tlPlane = gsap.timeline();
-      tlPlane
-        .from(planeRef.current, {
-          xPercent: 50,
-          scale: 0.3,
-          ease: "power1.inOut",
-          duration: 2,
-        })
-        .to(planeRef.current, {
-          xPercent: 0,
-          scale: 1,
-          ease: "power1.inOut",
-          duration: 1,
-        })
-        .to(planeRef.current, {
-          yPercent: -5,
-          yoyo: true,
-          repeat: -1,
-          ease: "power1.inOut",
-          duration: 3,
-        });
-    }
-  });
+  useGSAP(
+    () => {
+      if (planeRef.current) {
+        console.log("GSAP planeRef Init");
+        const tlPlane = gsap.timeline();
+        tlPlane
+          .from(planeRef.current, {
+            xPercent: 50,
+            scale: 0.3,
+            ease: "power1.inOut",
+            duration: 2,
+          })
+          .to(planeRef.current, {
+            xPercent: 0,
+            scale: 1,
+            ease: "power1.inOut",
+            duration: 1,
+          })
+          .to(planeRef.current, {
+            yPercent: -5,
+            yoyo: true,
+            repeat: -1,
+            ease: "power1.inOut",
+            duration: 3,
+          });
+      }
+    },
+    { dependencies: [planeRef] }
+  );
 
   useGSAP(
     () => {
       if (bgCloudsRef.current) {
+        console.log("GSAP bgCloud Init");
         gsap.to("img", {
           xPercent: 100,
           repeat: -1,
@@ -79,7 +81,7 @@ export default function Index() {
         });
       }
     },
-    { scope: bgCloudsRef }
+    { scope: bgCloudsRef, dependencies: [bgCloudsRef] }
   );
 
   useGSAP(
@@ -105,7 +107,7 @@ export default function Index() {
         });
       });
     },
-    { scope: cloudsRef }
+    { scope: cloudsRef, dependencies: [cloudsRef] }
   );
 
   const companyLogos = Object.values({
@@ -196,33 +198,38 @@ export default function Index() {
           className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-60"
           ref={cloudsRef}
         >
-          <Splide
-            aria-label="My Favorite Images"
-            options={{
-              pagination: false,
-              arrows: false,
-              type: "loop",
-              autoWidth: true,
-              gap: "2rem",
-              autoScroll: {
-                speed: 0.5,
-                pauseOnHover: true,
-                pauseOnFocus: false,
-              },
-            }}
-            extensions={{ AutoScroll }}
-          >
-            {companyLogos.map((logo, index) => (
-              <SplideSlide key={logo + index} className="logoSlide">
-                <img src={logo} alt={`Company Logo ${index + 1}`} />
-              </SplideSlide>
-            ))}
-          </Splide>
+          {!Splide || !SplideSlide ? (
+            <div>Loading slider…</div>
+          ) : (
+            <Splide
+              aria-label="My Favorite Images"
+              options={{
+                pagination: false,
+                arrows: false,
+                type: "loop",
+                autoWidth: true,
+                gap: "2rem",
+                autoScroll: {
+                  speed: 0.5,
+                  pauseOnHover: true,
+                  pauseOnFocus: false,
+                },
+              }}
+              extensions={{ AutoScroll }}
+            >
+              {companyLogos.map((logo, index) => (
+                <SplideSlide key={logo + index} className="logoSlide">
+                  <img src={logo} alt={`Company Logo ${index + 1}`} />
+                </SplideSlide>
+              ))}
+            </Splide>
+          )}
           {cloudImges.map((img, index) => (
             <img
               className="cloud"
               src={img}
               alt={`Company Logo ${index + 1}`}
+              key={index}
             />
           ))}
         </div>
