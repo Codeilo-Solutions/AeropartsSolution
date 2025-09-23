@@ -132,7 +132,7 @@ export default function Index() {
 
   return (
     <>
-      <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative overflow-clip flex">
+      <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col">
         <div
           className="absolute top-0 left-0 w-full h-full pointer-events-none bg-cover bg-center brightness-75"
           style={{
@@ -163,7 +163,26 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="planeWrapper w-[120%] h-auto mt-auto">
+        <div className="planeWrapper w-full h-dvh mt-auto flex flex-col">
+          <div className="searchContainer w-screen relative text-center my-auto 2xl:mb-0 text-white flex flex-col gap-2 container mx-auto ">
+            <h1 className="text-7xl font-bold">
+              Trusted parts for global skies.
+            </h1>
+            <p className="font-medium ">
+              Supplying premium aircraft components for private and commercial
+              fleets worldwide.
+            </p>
+            <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto">
+              <input
+                type="text"
+                placeholder="Enter parts number or name here.."
+                className="flex-1 bg-transparent placeholder-gray-300 text-white px-4 py-2 rounded-full focus:outline-none"
+              />
+              <button className="rounded-full bg-[#52bcd6] max-w-max px-6 py-2 mx-1 text-white font-medium shadow">
+                Search Now
+              </button>
+            </div>
+          </div>
           <img
             loading="lazy"
             src={planeImg}
