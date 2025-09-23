@@ -25,8 +25,8 @@ import company12Img from "../../assets/images/company12.png";
 import company13Img from "../../assets/images/company13.png";
 import company14Img from "../../assets/images/company14.png";
 import "./_index/style.css";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
+import splideDefault from "@splidejs/react-splide";
+import autoScrollDefault from "@splidejs/splide-extension-auto-scroll";
 import "@splidejs/react-splide/css";
 
 export function meta({}: Route.MetaArgs) {
@@ -37,6 +37,8 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Index() {
+  const { Splide, SplideSlide } = splideDefault;
+  const { AutoScroll } = autoScrollDefault;
   const planeRef = useRef<HTMLImageElement>(null);
   const bgCloudsRef = useRef<HTMLImageElement>(null);
   const cloudsRef = useRef<HTMLImageElement>(null);
