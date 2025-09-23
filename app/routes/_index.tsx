@@ -10,7 +10,24 @@ import cloud2Img from "../../assets/images/cloud2.png";
 import cloud3Img from "../../assets/images/cloud3.png";
 import cloud4Img from "../../assets/images/cloud4.png";
 import cloud5Img from "../../assets/images/cloud5.png";
+import company1Img from "../../assets/images/company1.png";
+import company2Img from "../../assets/images/company2.png";
+import company3Img from "../../assets/images/company3.png";
+import company4Img from "../../assets/images/company4.png";
+import company5Img from "../../assets/images/company5.png";
+import company6Img from "../../assets/images/company6.png";
+import company7Img from "../../assets/images/company7.png";
+import company8Img from "../../assets/images/company8.png";
+import company9Img from "../../assets/images/company9.png";
+import company10Img from "../../assets/images/company10.png";
+import company11Img from "../../assets/images/company11.png";
+import company12Img from "../../assets/images/company12.png";
+import company13Img from "../../assets/images/company13.png";
+import company14Img from "../../assets/images/company14.png";
 import "./_index/style.css";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
+import "@splidejs/react-splide/css";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -67,7 +84,7 @@ export default function Index() {
     () => {
       // Use gsap.utils.toArray to get all the img elements within the scope
       const images = gsap.utils.toArray<HTMLImageElement>(
-        "img",
+        "img.cloud",
         cloudsRef.current
       );
 
@@ -89,16 +106,47 @@ export default function Index() {
     { scope: cloudsRef }
   );
 
+  const companyLogos = Object.values({
+    company1Img,
+    company2Img,
+    company3Img,
+    company4Img,
+    company5Img,
+    company6Img,
+    company7Img,
+    company8Img,
+    company9Img,
+    company10Img,
+    company11Img,
+    company12Img,
+    company13Img,
+    company14Img,
+  });
+  const cloudImges = Object.values({
+    cloud1Img,
+    cloud2Img,
+    cloud3Img,
+    cloud4Img,
+    cloud5Img,
+  });
+
   return (
     <>
-      <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative overflow-clip flex">
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-cover bg-center brightness-75">
-          <img
+      <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col">
+        <div
+          className="absolute top-0 left-0 w-full h-full pointer-events-none bg-cover bg-center brightness-75"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 60%, transparent 100%)",
+            backgroundImage: `url(${skyBgImg})`,
+          }}
+        >
+          {/* <img
             loading="lazy"
             src={skyBgImg}
             className="object-cover absolute inset-0 w-full h-full"
             alt=""
-          ></img>
+          /> */}
           <div className="bgClouds" ref={bgCloudsRef}>
             <img
               loading="lazy"
@@ -115,7 +163,26 @@ export default function Index() {
           </div>
         </div>
 
-        <div className="planeWrapper w-[120%] h-auto mt-auto">
+        <div className="planeWrapper w-full h-dvh mt-auto flex flex-col">
+          <div className="searchContainer w-screen relative text-center my-auto 2xl:mb-0 text-white flex flex-col gap-2 container mx-auto ">
+            <h1 className="text-7xl font-bold">
+              Trusted parts for global skies.
+            </h1>
+            <p className="font-medium ">
+              Supplying premium aircraft components for private and commercial
+              fleets worldwide.
+            </p>
+            <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto">
+              <input
+                type="text"
+                placeholder="Enter parts number or name here.."
+                className="flex-1 bg-transparent placeholder-gray-300 text-white px-4 py-2 rounded-full focus:outline-none"
+              />
+              <button className="rounded-full bg-[#52bcd6] max-w-max px-6 py-2 mx-1 text-white font-medium shadow">
+                Search Now
+              </button>
+            </div>
+          </div>
           <img
             loading="lazy"
             src={planeImg}
@@ -124,14 +191,38 @@ export default function Index() {
           />
         </div>
         <div
-          className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-80"
+          className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-60"
           ref={cloudsRef}
         >
-          <img loading="lazy" src={cloud1Img} />
-          <img loading="lazy" src={cloud2Img} />
-          <img loading="lazy" src={cloud3Img} />
-          <img loading="lazy" src={cloud4Img} />
-          <img loading="lazy" src={cloud5Img} />
+          <Splide
+            aria-label="My Favorite Images"
+            options={{
+              pagination: false,
+              arrows: false,
+              type: "loop",
+              autoWidth: true,
+              gap: "2rem",
+              autoScroll: {
+                speed: 0.5,
+                pauseOnHover: true,
+                pauseOnFocus: false,
+              },
+            }}
+            extensions={{ AutoScroll }}
+          >
+            {companyLogos.map((logo, index) => (
+              <SplideSlide key={logo + index} className="logoSlide">
+                <img src={logo} alt={`Company Logo ${index + 1}`} />
+              </SplideSlide>
+            ))}
+          </Splide>
+          {cloudImges.map((img, index) => (
+            <img
+              className="cloud"
+              src={img}
+              alt={`Company Logo ${index + 1}`}
+            />
+          ))}
         </div>
       </section>
     </>
