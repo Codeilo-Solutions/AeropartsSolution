@@ -76,6 +76,8 @@
 html,
 body {
   min-height: 100dvh;
+  max-width: 100%;
+  overflow-x: clip;
   display: flex;
   flex-direction: column;
   font-family: var(--font-lato);
@@ -87,4 +89,7 @@ body {
 
 .container {
   padding-inline: 1rem;
+}
+.fixed-footer {
+  @apply fixed bottom-0 left-0 w-screen z-0;
 }

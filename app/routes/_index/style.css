@@ -6,6 +6,8 @@
     width: 100%;
     height: 100%;
     object-fit: scale-down;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(3%) saturate(866%)
+      hue-rotate(225deg) brightness(117%) contrast(89%);
   }
   .splide {
     position: absolute;

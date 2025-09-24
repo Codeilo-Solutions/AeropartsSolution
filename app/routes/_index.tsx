@@ -1,5 +1,6 @@
 import type { Route } from "./+types/_index";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import skyBgImg from "../../assets/images/Rectangle 1.png";
@@ -27,6 +28,15 @@ import company14Img from "../../assets/images/company14.png";
 import "./_index/style.css";
 import { useSafeSplide } from "~/components/SafeSplide";
 
+import section1Img from "../../assets/images/sections/section1.png";
+import section2Img from "../../assets/images/sections/section2.png";
+import section3Img from "../../assets/images/sections/section3.png";
+import section4Img from "../../assets/images/sections/section4.png";
+import footerTopImg from "../../assets/images/sections/footerTop.png";
+import footerBottomImg from "../../assets/images/sections/footerBottom.png";
+import footerPlaneImg from "../../assets/images/sections/plane-transparent.png";
+import propellerVid from "../../assets/videos/propeller.mp4";
+
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Home" },
@@ -34,11 +44,21 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Index() {
   const { Splide, SplideSlide, AutoScroll } = useSafeSplide();
+  const sectionRef = useRef<HTMLDivElement>(null);
   const planeRef = useRef<HTMLImageElement>(null);
   const bgCloudsRef = useRef<HTMLImageElement>(null);
   const cloudsRef = useRef<HTMLImageElement>(null);
+  // Add this ref to your component's top section
+  const footerRef = useRef<HTMLDivElement>(null);
+
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  const planeHolderRef = useRef<HTMLDivElement>(null);
+  const footerTopImgRef = useRef<HTMLImageElement>(null);
+  const footerBottomImgRef = useRef<HTMLImageElement>(null);
   useGSAP(
     () => {
       if (planeRef.current) {
@@ -110,6 +130,45 @@ export default function Index() {
     { scope: cloudsRef, dependencies: [cloudsRef] }
   );
 
+  useGSAP(
+    () => {
+      if (planeHolderRef.current && mainContainerRef.current) {
+        console.log("GSAP Footer Animation Init");
+
+        // Set initial states
+        gsap.set(planeHolderRef.current, {
+          scale: 0.2,
+        });
+
+        // Create the animation timeline
+        const footerTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: mainContainerRef.current,
+            start: "bottom bottom", // When bottom of content hits bottom of viewport
+            end: "bottom top", // When bottom of content hits top of viewport
+            scrub: 1, // Smooth scroll-linked animation
+            onUpdate: (self) => {
+              // Optional: log progress for debugging
+              console.log("Footer animation progress:", self.progress);
+            },
+            // markers: true,       // Uncomment for debugging
+          },
+        });
+
+        // Animate the plane holder scale
+        footerTimeline.to(planeHolderRef.current, {
+          scale: 1,
+          duration: 1,
+          ease: "back.out(1.7)",
+        });
+      }
+    },
+    {
+      scope: mainContainerRef,
+      dependencies: [planeHolderRef, mainContainerRef],
+    }
+  );
+
   const companyLogos = Object.values({
     company1Img,
     company2Img,
@@ -135,8 +194,8 @@ export default function Index() {
   });
 
   return (
-    <>
-      <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col">
+    <div ref={mainContainerRef}>
+      <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col bg-[#f1f1f1]">
         <div
           className="absolute top-0 left-0 w-full h-full pointer-events-none bg-cover bg-center brightness-75"
           style={{
@@ -234,6 +293,67 @@ export default function Index() {
           ))}
         </div>
       </section>
-    </>
+      <section className="imgSection bg-[#f1f1f1] w-screen py-41">
+        <div className="container mx-auto bg-transparent">
+          <img src={section1Img} alt="" />
+        </div>
+      </section>
+      <section className="imgSection w-screen py-41 relative overflow-clip">
+        <div
+          className="vidWrapper absolute inset-0 after:content-[''] after:absolute after:inset-0 after:bg-gradient-to-r after:from-[#1a2e45] after:from-30% after:via-[#1a2e45]/50 after:via-70% after:to-transparent
+"
+        >
+          <video
+            src={propellerVid}
+            className="absolute ml-auto object-cover h-full w-full top-0 right-0"
+            loop
+            muted
+            autoPlay
+          ></video>
+        </div>
+        <div className="container mx-auto bg-transparent z-1 relative">
+          <img src={section2Img} alt="" />
+        </div>
+      </section>
+      <section className="imgSection bg-[#f1f1f1] w-screen py-41">
+        <div className="container mx-auto bg-transparent">
+          <img src={section3Img} alt="" />
+        </div>
+      </section>
+      <section className="imgSection bg-[#fff] w-screen py-41">
+        <div className="container mx-auto bg-transparent">
+          <img src={section4Img} alt="" />
+        </div>
+      </section>
+      {/* <section
+        className="imgSection bg-[#0a0a0a] w-screen pt-21 pb-4 -z-1 sticky bottom-0"
+        ref={footerRef}
+      >
+        <div className="container mx-auto bg-transparent flex flex-col place-content-center">
+          <img src={footerTopImg} alt="" className="max-w-[590px] mx-auto" />
+          <div className="planeHolder">
+            <img src={footerPlaneImg} alt="" />
+          </div>
+          <img src={footerBottomImg} alt="" />
+        </div>
+      </section> */}
+      <section
+        className="imgSection bg-[#0a0a0a] w-screen pt-21 pb-4 -z-1 sticky bottom-0"
+        ref={footerRef}
+      >
+        <div className="container mx-auto bg-transparent flex flex-col place-content-center">
+          <img
+            src={footerTopImg}
+            alt=""
+            className="max-w-[590px] mx-auto"
+            ref={footerTopImgRef}
+          />
+          <div className="planeHolder" ref={planeHolderRef}>
+            <img src={footerPlaneImg} alt="" />
+          </div>
+        </div>
+        <img src={footerBottomImg} alt="" ref={footerBottomImgRef} />
+      </section>
+    </div>
   );
 }
