@@ -137,15 +137,15 @@ export default function Index() {
 
         // Set initial states
         gsap.set(planeHolderRef.current, {
-          scale: 0.2,
+          scale: 0.1,
         });
 
         // Create the animation timeline
         const footerTimeline = gsap.timeline({
           scrollTrigger: {
             trigger: mainContainerRef.current,
-            start: "bottom bottom", // When bottom of content hits bottom of viewport
-            end: "bottom top", // When bottom of content hits top of viewport
+            start: "80%", // When bottom of content hits bottom of viewport
+            end: "top", // When bottom of content hits top of viewport
             scrub: 1, // Smooth scroll-linked animation
             onUpdate: (self) => {
               // Optional: log progress for debugging
@@ -159,7 +159,7 @@ export default function Index() {
         footerTimeline.to(planeHolderRef.current, {
           scale: 1,
           duration: 1,
-          ease: "back.out(1.7)",
+          ease: "linear",
         });
       }
     },
