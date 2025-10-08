@@ -29,7 +29,10 @@ const SolutionSection = () => {
       <div className="container mx-auto bg-transparent">
         <div className="grid lg:grid-cols-3 gap-10">
           {solutionData.map((data) => (
-            <div className="solutionCard bg-white flex flex-col gap-4 px-12 py-8 text-primary">
+            <div
+              key={data.title}
+              className="solutionCard bg-white flex flex-col gap-4 px-12 py-8 text-primary"
+            >
               <img src={data.icon} alt="" height={42} width={42} />
               <h1 className="text-2xl font-normal">{data.title}</h1>
               <p className="text-sm font-normal">{data.desc}</p>

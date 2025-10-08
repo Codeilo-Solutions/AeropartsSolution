@@ -39,7 +39,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="mainContent">{children}</div>
         <ScrollRestoration />
         <Scripts />
-        <Footer />
       </body>
     </html>
   );

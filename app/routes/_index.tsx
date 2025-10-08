@@ -6,16 +6,12 @@ import { useRef } from "react";
 
 import "./_index/style.css";
 
-import section4Img from "../../assets/images/sections/section4.png";
-import footerTopImg from "../../assets/images/sections/footerTop.png";
-import footerBottomImg from "../../assets/images/sections/footerBottom.png";
-import footerPlaneImg from "../../assets/images/sections/plane-transparent.png";
-
 import Banner from "~/components/index/Banner";
 import SolutionSection from "~/components/index/SolutionSection";
 import WhyUs from "~/components/index/WhyUs";
 import OurFeatures from "~/components/index/OurFeatures";
 import OurLocation from "~/components/index/OurLocation";
+import Footer from "~/components/Footer";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -28,13 +24,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Index() {
   // Add this ref to your component's top section
-  const footerRef = useRef<HTMLDivElement>(null);
-
   const mainContainerRef = useRef<HTMLDivElement>(null);
-  const planeHolderRef = useRef<HTMLDivElement>(null);
-  const footerTopImgRef = useRef<HTMLImageElement>(null);
-  const footerBottomImgRef = useRef<HTMLImageElement>(null);
 
+  const footerRef = useRef<HTMLDivElement>(null);
+  const planeHolderRef = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
       if (planeHolderRef.current && mainContainerRef.current) {
@@ -75,7 +68,7 @@ export default function Index() {
   );
 
   return (
-    <div ref={mainContainerRef}>
+    <div ref={mainContainerRef} className="curtainWrapper">
       <Banner></Banner>
       <SolutionSection />
       <WhyUs />
@@ -93,23 +86,7 @@ export default function Index() {
           <img src={footerBottomImg} alt="" />
         </div>
       </section> */}
-      <section
-        className="imgSection bg-[#0a0a0a] w-screen pt-21 pb-4 -z-1 sticky bottom-0"
-        ref={footerRef}
-      >
-        <div className="container mx-auto bg-transparent flex flex-col place-content-center">
-          <img
-            src={footerTopImg}
-            alt=""
-            className="max-w-[590px] mx-auto"
-            ref={footerTopImgRef}
-          />
-          <div className="planeHolder" ref={planeHolderRef}>
-            <img src={footerPlaneImg} alt="" />
-          </div>
-        </div>
-        <img src={footerBottomImg} alt="" ref={footerBottomImgRef} />
-      </section>
+      <Footer footerRef={footerRef} planeHolderRef={planeHolderRef} />
     </div>
   );
 }
