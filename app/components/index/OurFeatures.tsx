@@ -65,7 +65,10 @@ const OurFeatures = () => {
       </div>
       <div className="container mx-auto details grid lg:grid-cols-3 gap-10 mt-6">
         {featuresData.map((data) => (
-          <div className="solutionCard bg-light flex flex-col gap-4 px-12 py-8">
+          <div
+            key={data.title}
+            className="solutionCard bg-light flex flex-col gap-4 px-12 py-8"
+          >
             <img src={data.icon} alt="" height={60} width={60} />
             <h2 className="text-2xl font-normal">{data.title}</h2>
             <p className="text-sm font-normal">{data.desc}</p>
