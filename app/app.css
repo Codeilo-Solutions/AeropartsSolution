@@ -89,6 +89,10 @@ body {
   font-family: var(--font-lato);
 }
 
+* {
+  transition-behavior: allow-discrete;
+}
+
 .mainContent {
   flex-grow: 1;
 }
@@ -239,3 +243,55 @@ body {
     @apply bg-background text-foreground;
   }
 } */
+
+[data-state="open"].overlay-animate {
+  animation: fadeIn 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-state="closed"].overlay-animate {
+  animation: fadeOut 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-state="open"].content-animate {
+  animation: slideInFromRight 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-state="closed"].content-animate {
+  animation: slideOutToRight 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

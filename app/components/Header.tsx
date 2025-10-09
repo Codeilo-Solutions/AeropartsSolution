@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Divide as Hamburger } from "hamburger-react";
 import logo from "../../assets/images/Logo.png";
 import { useNavigate } from "react-router";
+import Menu from "~/components/Menu";
 
 const Header = () => {
   const [isOpen, setOpen] = useState(false);
@@ -33,18 +34,20 @@ const Header = () => {
       className="container mx-auto flex items-center justify-between p-4 z-100"
       ref={headerRef}
     >
-      <button>
+      {/* <button>
         <Hamburger toggled={isOpen} toggle={setOpen} color="white" />
-      </button>
+      </button> */}
+      <Menu></Menu>
       <div>
         <img loading="lazy" src={logo} />
       </div>
       <button
-        className="cursor-pointer bg-white rounded-full px-4 py-2 capitalize"
+        className="cursor-pointer bg-white rounded-full px-4 py-2 capitalize max-md:hidden"
         onClick={handleQuoteClick}
       >
         Request a Quote
       </button>
+      <div className="invisible md:hidden"></div>
     </header>
   );
 };

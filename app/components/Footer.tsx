@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa6";
 import { IconContext } from "react-icons";
 import { useEffect } from "react";
+import Socials from "./Socials";
 
 type propType = {
   footerRef: React.RefObject<HTMLElement | null>;
@@ -117,20 +118,7 @@ const Footer = ({ footerRef, planeHolderRef }: propType) => {
           </div>
           <div className="footerLinkSection">
             <h2 className="text-lg text-secondary">Follow Us</h2>
-            <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
-              <IconContext.Provider value={{ color: "black", size: "1em" }}>
-                {footerSocials.map((social, index) => (
-                  <li
-                    key={index}
-                    className="p-1 rounded-full bg-white cursor-pointer"
-                  >
-                    <a href={social.url} className="contents">
-                      {social.icon}
-                    </a>
-                  </li>
-                ))}
-              </IconContext.Provider>
-            </ul>
+            <Socials />
           </div>
         </div>
 
