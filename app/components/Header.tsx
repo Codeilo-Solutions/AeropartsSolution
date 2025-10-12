@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Divide as Hamburger } from "hamburger-react";
 import logo from "../../assets/images/Logo.png";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Menu from "~/components/Menu";
 
 const Header = () => {
@@ -26,7 +26,7 @@ const Header = () => {
   }, []);
 
   const handleQuoteClick = () => {
-    navigate("/");
+    navigate("/rfq");
   };
 
   return (
@@ -38,9 +38,9 @@ const Header = () => {
         <Hamburger toggled={isOpen} toggle={setOpen} color="white" />
       </button> */}
       <Menu></Menu>
-      <div>
+      <Link to="/">
         <img loading="lazy" src={logo} />
-      </div>
+      </Link>
       <button
         className="cursor-pointer bg-white rounded-full px-4 py-2 capitalize max-md:hidden"
         onClick={handleQuoteClick}

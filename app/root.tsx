@@ -11,6 +11,9 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,6 +29,27 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const mainRef = useRef<HTMLDivElement | null>(null);
+  const planeHolderRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    // guard for SSR
+    if (typeof window === "undefined" || !mainRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
+    // simple GSAP animation example
+    // const ctx = gsap.context(() => {
+    //   gsap.from(".mainContent", {
+    //     opacity: 0,
+    //     y: 20,
+    //     duration: 1,
+    //     ease: "power2.out",
+    //   });
+    // }, mainRef);
+
+    // cleanup
+    // return () => ctx.revert();
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -36,7 +60,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <Header />
-        <div className="mainContent">{children}</div>
+        <div className="mainContent curtainWrapper" ref={mainRef}>
+          {children}
+          {/* {mainRef.current && ( */}
+          <Footer
+            mainContainerRef={mainRef}
+            footerRef={footerRef}
+            planeHolderRef={planeHolderRef}
+          />
+          {/* )} */}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
