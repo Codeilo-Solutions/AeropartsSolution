@@ -32,6 +32,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import RFQForm from "../rfq/RFQForm";
 
 const Banner = () => {
   const { Splide, SplideSlide, AutoScroll } = useSafeSplide();
@@ -184,7 +185,7 @@ const Banner = () => {
               <DialogTrigger className="rounded-full bg-[#52bcd6] max-w-max px-6 py-2 mx-1 text-white font-medium shadow z-1">
                 Search Now
               </DialogTrigger>
-              <DialogContent className="bg-white">
+              <DialogContent className="bg-white max-h-[80dvh] overflow-auto">
                 <DialogHeader>
                   <DialogTitle>Request For Quote</DialogTitle>
                   <div>
@@ -200,7 +201,7 @@ const Banner = () => {
                       </div>
 
                       {/* <!-- RFQ Form --> */}
-                      <form
+                      {/* <form
                         action="/submit-rfq"
                         method="POST"
                         className="space-y-4"
@@ -292,7 +293,8 @@ const Banner = () => {
                             Submit RFQ
                           </button>
                         </div>
-                      </form>
+                      </form> */}
+                      <RFQForm />
                     </div>
                   </div>
                 </DialogHeader>

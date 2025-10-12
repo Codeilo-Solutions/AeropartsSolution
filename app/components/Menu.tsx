@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import Socials from "./Socials";
+import { Link } from "react-router";
 
 const SlidingMenu = () => {
   const [open, setOpen] = useState(false);
 
   const menuItems = [
-    { label: "Home", href: "#" },
-    { label: "About", href: "#" },
-    { label: "RFQ", href: "#" },
-    { label: "Contact Us", href: "#" },
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "RFQ", href: "/rfq" },
+    { label: "Contact Us", href: "/contact" },
   ];
 
   return (
@@ -33,7 +34,7 @@ const SlidingMenu = () => {
         <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 overlay-animate" />
 
         {/* Menu content with slide animation */}
-        <Dialog.Content className="fixed right-0 top-0 h-full w-[min(100%,25rem)] bg-white shadow-2xl z-100 flex flex-col transition-transform duration-300 focus:outline-none content-animate">
+        <Dialog.Content className="fixed left-0 top-0 h-full w-[min(100%,25rem)] bg-white shadow-2xl z-100 flex flex-col transition-transform duration-300 focus:outline-none content-animate">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-slate-200">
             <Dialog.Title className="text-xl font-semibold text-slate-900">
@@ -62,14 +63,14 @@ const SlidingMenu = () => {
           <nav className="grow overflow-y-auto p-4 flex flex-col">
             <div className="space-y-2 grow">
               {menuItems.map((item, idx) => (
-                <a
+                <Link
                   key={idx}
-                  href={item.href}
+                  to={item.href}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors"
                   onClick={() => setOpen(false)}
                 >
                   <span className="font-medium">{item.label}</span>
-                </a>
+                </Link>
               ))}
             </div>
 

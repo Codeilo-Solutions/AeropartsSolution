@@ -77,6 +77,7 @@
   --color-light: #f1f1f1;
   --color-primary: #1a2e45;
   --color-secondary: #e1a730;
+  --color-grey: #eeeeee;
 }
 
 html,
@@ -253,28 +254,28 @@ body {
 }
 
 [data-state="open"].content-animate {
-  animation: slideInFromRight 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: slideInFromLeft 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-state="closed"].content-animate {
-  animation: slideOutToRight 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: slideOutToLeft 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes slideInFromRight {
+@keyframes slideInFromLeft {
   from {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
   to {
     transform: translateX(0);
   }
 }
 
-@keyframes slideOutToRight {
+@keyframes slideOutToLeft {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(100%);
+    transform: translateX(-100%);
   }
 }
 

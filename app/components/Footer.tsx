@@ -1,22 +1,21 @@
 import footerLogoImg from "../../assets/images/FooterLogo.png";
 import footerPlaneImg from "../../assets/images/sections/plane-transparent.png";
-import {
-  FaFacebookF,
-  FaXTwitter,
-  FaTiktok,
-  FaLinkedinIn,
-  FaInstagram,
-} from "react-icons/fa6";
-import { IconContext } from "react-icons";
 import { useEffect } from "react";
 import Socials from "./Socials";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 type propType = {
   footerRef: React.RefObject<HTMLElement | null>;
   planeHolderRef: React.RefObject<HTMLDivElement | null>;
+  mainContainerRef: React.RefObject<HTMLDivElement | null>;
 };
 
-const Footer = ({ footerRef, planeHolderRef }: propType) => {
+// gsap.registerPlugin(ScrollTrigger);
+
+const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
   const footerLocations = [
     "France: +33 (XXX) XXX XXXX",
     "KSA: +966 (XXX) XXX XXXX",
@@ -33,13 +32,6 @@ const Footer = ({ footerRef, planeHolderRef }: propType) => {
     { link: "Terms of Service", url: "/terms-of-service" },
     { link: "Privacy Policy", url: "/privacy-policy" },
     { link: "Cookie Policy", url: "/cookie-policy" },
-  ];
-  const footerSocials = [
-    { icon: <FaFacebookF />, url: "https://facebook.com/" },
-    { icon: <FaXTwitter />, url: "https://twitter.com/" },
-    { icon: <FaTiktok />, url: "https://tiktok.com/" },
-    { icon: <FaLinkedinIn />, url: "https://linkedin.com/" },
-    { icon: <FaInstagram />, url: "https://instagram.com/" },
   ];
 
   useEffect(() => {
@@ -62,6 +54,64 @@ const Footer = ({ footerRef, planeHolderRef }: propType) => {
       window.removeEventListener("resize", checkFooterHeight);
     };
   }, [footerRef]);
+
+  useGSAP(
+    () => {
+      if (
+        !planeHolderRef.current ||
+        !mainContainerRef.current ||
+        !footerRef.current
+      )
+        return;
+
+      console.log("GSAP Footer Animation Init");
+
+      const footerHeight = footerRef.current?.getBoundingClientRect().height;
+      const mainContainerHeight =
+        mainContainerRef.current?.getBoundingClientRect().height;
+      const footerTriggerThreshold = Math.max(footerHeight, window.innerHeight);
+      // Set initial states
+      gsap.set(planeHolderRef.current, {
+        scale: 0.1,
+      });
+
+      // Create the animation timeline
+      const footerTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: mainContainerRef.current,
+          start: () => `${mainContainerHeight - footerTriggerThreshold}px`, // When bottom of content hits bottom of viewport
+          end: () => `${mainContainerHeight - footerTriggerThreshold}px`, // When bottom of content hits top of viewport
+          scrub: 1, // Smooth scroll-linked animation
+          markers: false,
+          onUpdate: (self) => {
+            // Optional: log progress for debugging
+            console.log("Footer animation progress:", self.progress);
+          },
+          // markers: true,       // Uncomment for debugging
+        },
+      });
+
+      // Animate the plane holder scale
+      footerTimeline.to(planeHolderRef.current, {
+        scale: 1,
+        duration: 1,
+        ease: "linear",
+      });
+      return () => {
+        footerTimeline.scrollTrigger?.kill();
+        footerTimeline.kill();
+      };
+    },
+    {
+      dependencies: [planeHolderRef.current, mainContainerRef.current],
+    }
+  );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      ScrollTrigger.refresh();
+    }
+  }, []);
 
   return (
     <footer
