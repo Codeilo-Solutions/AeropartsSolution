@@ -3,6 +3,8 @@ import footerPlaneImg from "../../assets/images/sections/plane-transparent.png";
 import { useEffect } from "react";
 import Socials from "./Socials";
 
+import { useLocation } from "react-router";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -13,9 +15,9 @@ type propType = {
   mainContainerRef: React.RefObject<HTMLDivElement | null>;
 };
 
-// gsap.registerPlugin(ScrollTrigger);
-
 const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
+  const location = useLocation();
+
   const footerLocations = [
     "France: +33 (XXX) XXX XXXX",
     "KSA: +966 (XXX) XXX XXXX",
@@ -82,7 +84,7 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
           start: () => `${mainContainerHeight - footerTriggerThreshold}px`, // When bottom of content hits bottom of viewport
           end: () => `${mainContainerHeight - footerTriggerThreshold}px`, // When bottom of content hits top of viewport
           scrub: 1, // Smooth scroll-linked animation
-          markers: false,
+          markers: true,
           onUpdate: (self) => {
             // Optional: log progress for debugging
             console.log("Footer animation progress:", self.progress);
@@ -103,15 +105,24 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
       };
     },
     {
-      dependencies: [planeHolderRef.current, mainContainerRef.current],
+      dependencies: [
+        planeHolderRef.current,
+        mainContainerRef.current,
+        location.pathname,
+      ],
+      revertOnUpdate: true,
     }
   );
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    // Small delay to ensure DOM has updated and images have loaded
+    const timeoutId = setTimeout(() => {
       ScrollTrigger.refresh();
-    }
-  }, []);
+      console.log("ScrollTrigger refreshed after route change");
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [location.pathname]);
 
   return (
     <footer
@@ -147,7 +158,7 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
       <hr className="text-white/10 text-lg my-6" />
 
       <div className="footerBottomSection text-white mt-10 container mx-auto">
-        <div className="footerLinks sm:flex md:gap-x-12 gap-y-4 flex-wrap">
+        <div className="footerLinks flex gap-x-12 gap-y-4 flex-wrap">
           <div className="footerLinkSection">
             <h2 className="text-lg text-secondary">AOG Desk:</h2>
             <ul className=" lg:grid lg:grid-cols-2 gap-x-4 gap-y-1 text-xs">
