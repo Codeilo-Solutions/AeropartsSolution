@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useSafeSplide } from "~/components/SafeSplide";
+
 import skyBgImg from "../../../assets/images/Rectangle 1.png";
 import planeImg from "../../../assets/images/Plane.png";
 import cloudBgImg from "../../../assets/images/Clouds.png";
@@ -33,9 +33,9 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import RFQForm from "../rfq/RFQForm";
+import Slider from "../Slider.client";
 
 const Banner = () => {
-  const { Splide, SplideSlide, AutoScroll } = useSafeSplide();
   const planeRef = useRef<HTMLImageElement>(null);
   const bgCloudsRef = useRef<HTMLImageElement>(null);
   const cloudsRef = useRef<HTMLImageElement>(null);
@@ -317,32 +317,7 @@ const Banner = () => {
         className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-60"
         ref={cloudsRef}
       >
-        {!Splide || !SplideSlide ? (
-          <div>Loading slider…</div>
-        ) : (
-          <Splide
-            aria-label="My Favorite Images"
-            options={{
-              pagination: false,
-              arrows: false,
-              type: "loop",
-              autoWidth: true,
-              gap: "2rem",
-              autoScroll: {
-                speed: 0.5,
-                pauseOnHover: true,
-                pauseOnFocus: false,
-              },
-            }}
-            extensions={{ AutoScroll }}
-          >
-            {companyLogos.map((logo, index) => (
-              <SplideSlide key={logo + index} className="logoSlide">
-                <img src={logo} alt={`Company Logo ${index + 1}`} />
-              </SplideSlide>
-            ))}
-          </Splide>
-        )}
+        <Slider companyLogos={companyLogos}></Slider>
         {cloudImges.map((img, index) => (
           <img
             className="cloud"

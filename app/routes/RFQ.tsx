@@ -1,18 +1,18 @@
-import type { Route } from "./+types/_index";
+import type { Route } from "./+types/RFQ";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/Rectangle 1.png";
 import RFQForm from "~/components/rfq/RFQForm";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Home" },
-    { name: "description", content: "Welcome to Aerospace!" },
+    { title: "Request for Quote" },
+    { name: "description", content: "Request a quote or contact us." },
   ];
 }
 
 const RFQ = () => {
   return (
-    <div className="curtainWrapper">
+    <>
       <Banner
         bgImgUrl={BannerImg}
         title="Request a Quote"
@@ -20,7 +20,7 @@ const RFQ = () => {
       />
 
       <section className="min-h-screen bg-white">
-        <div className="container mx-auto grid lg:grid-cols-2 py-20">
+        <div className="container mx-auto grid lg:grid-cols-2 py-20 gap-y-10">
           <div className="formDetails bg-grey text-[#494949] max-w-max max-h-max p-20 pr-24 pl-0 rounded-r-[30px] relative after:content-[''] after:absolute after:w-full after:h-full after:top-0 after:left-0 after:bg-grey after:-translate-x-full">
             <h1 className="text-primary font-black text-5xl">
               Contact Our Team
@@ -44,7 +44,7 @@ const RFQ = () => {
           <RFQForm></RFQForm>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

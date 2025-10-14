@@ -26,6 +26,11 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
+  {
+    rel: "icon",
+    type: "image/svg+xml",
+    href: "/favicon.svg",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -36,18 +41,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     // guard for SSR
     if (typeof window === "undefined" || !mainRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
-    // simple GSAP animation example
-    // const ctx = gsap.context(() => {
-    //   gsap.from(".mainContent", {
-    //     opacity: 0,
-    //     y: 20,
-    //     duration: 1,
-    //     ease: "power2.out",
-    //   });
-    // }, mainRef);
-
-    // cleanup
-    // return () => ctx.revert();
   }, []);
 
   return (
@@ -62,13 +55,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Header />
         <div className="mainContent curtainWrapper" ref={mainRef}>
           {children}
-          {/* {mainRef.current && ( */}
           <Footer
             mainContainerRef={mainRef}
             footerRef={footerRef}
             planeHolderRef={planeHolderRef}
           />
-          {/* )} */}
         </div>
         <ScrollRestoration />
         <Scripts />
