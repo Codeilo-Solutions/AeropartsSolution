@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect } from "react";
-import { Divide as Hamburger } from "hamburger-react";
+import { useRef, useEffect } from "react";
+// import { Divide as Hamburger } from "hamburger-react";
 import logo from "../../assets/images/Logo.png";
 import { Link, useNavigate } from "react-router";
 import Menu from "~/components/Menu";
 
 const Header = () => {
-  const [isOpen, setOpen] = useState(false);
+  // const [isOpen, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const navigate = useNavigate();
 
