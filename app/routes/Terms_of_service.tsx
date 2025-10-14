@@ -2,6 +2,13 @@ import type { Route } from "./+types/Terms_of_service";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/Rectangle 1.png";
 
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Terms Of Service" },
+    { name: "description", content: "Terms of Service" },
+  ];
+}
+
 const Terms_of_service = () => {
   return (
     <>
