@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import Socials from "./Socials";
 import { Link } from "react-router";
 
-const SlidingMenu = () => {
+const Menu = () => {
   const [open, setOpen] = useState(false);
 
   const menuItems = [
@@ -68,6 +68,7 @@ const SlidingMenu = () => {
                   to={item.href}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors"
                   onClick={() => setOpen(false)}
+                  prefetch="intent"
                 >
                   <span className="font-medium">{item.label}</span>
                 </Link>
@@ -97,4 +98,4 @@ const SlidingMenu = () => {
   );
 };
 
-export default SlidingMenu;
+export default Menu;

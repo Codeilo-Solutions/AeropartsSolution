@@ -1,7 +1,6 @@
+import type { Route } from "./+types/About";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/Rectangle 1.png";
-import type { Route } from "./+types/About";
-import { useSafeSplide } from "~/components/SafeSplide";
 
 import company1Img from "~/../assets/images/company1.png";
 import company2Img from "~/../assets/images/company2.png";
@@ -17,13 +16,13 @@ import company11Img from "~/../assets/images/company11.png";
 import company12Img from "~/../assets/images/company12.png";
 import company13Img from "~/../assets/images/company13.png";
 import company14Img from "~/../assets/images/company14.png";
+import Slider from "~/components/Slider.client";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "About" }, { name: "description", content: "About Us" }];
 }
 
 export default function About() {
-  const { Splide, SplideSlide, AutoScroll } = useSafeSplide();
   const companyLogos = Object.values({
     company1Img,
     company2Img,
@@ -125,32 +124,7 @@ export default function About() {
         </div>
       </section>
       <section className="bg-white text-center pb-20">
-        {!Splide || !SplideSlide ? (
-          <div>Loading slider…</div>
-        ) : (
-          <Splide
-            aria-label="My Favorite Images"
-            options={{
-              pagination: false,
-              arrows: false,
-              type: "loop",
-              autoWidth: true,
-              gap: "2rem",
-              autoScroll: {
-                speed: 0.5,
-                pauseOnHover: true,
-                pauseOnFocus: false,
-              },
-            }}
-            extensions={{ AutoScroll }}
-          >
-            {companyLogos.map((logo, index) => (
-              <SplideSlide key={logo + index} className="logoSlide">
-                <img src={logo} alt={`Company Logo ${index + 1}`} />
-              </SplideSlide>
-            ))}
-          </Splide>
-        )}
+        <Slider companyLogos={companyLogos}></Slider>
       </section>
     </>
   );

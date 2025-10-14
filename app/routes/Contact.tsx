@@ -2,6 +2,7 @@ import type { Route } from "./+types/Contact";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/Rectangle 1.png";
 import ContactForm from "~/components/contact/ContactForm";
+import favIcon from "~/../assets/images/aero-icon.svg";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -47,6 +48,23 @@ const Contact = () => {
             </p>
           </div>
           <ContactForm></ContactForm>
+        </div>
+      </section>
+      <section className="pt-20 bg-primary text-white">
+        <div className="container mx-auto text-center space-y-4">
+          <h1 className="font-bold text-5xl">Need Urgent AOG Support?</h1>
+          <p className="text-2xl">
+            Call our <span className="text-secondary">24/7</span> hotline at{" "}
+            <span className="text-secondary">+971 50 219 3737</span> for
+            immediate assistance.
+          </p>
+          <img
+            src={favIcon}
+            alt=""
+            height={200}
+            width={200}
+            className="h-[150px] w-[240px] object-cover object-top mx-auto"
+          />
         </div>
       </section>
     </>

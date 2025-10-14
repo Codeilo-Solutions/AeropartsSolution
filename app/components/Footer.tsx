@@ -31,9 +31,9 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
     { link: "Careers", url: "/careers" },
     { link: "Contact Us", url: "/contact" },
     { link: "Solutions", url: "/solutions" },
-    { link: "Terms of Service", url: "/terms-of-service" },
-    { link: "Privacy Policy", url: "/privacy-policy" },
-    { link: "Cookie Policy", url: "/cookie-policy" },
+    { link: "Terms of Service", url: "/terms_of_service" },
+    { link: "Privacy Policy", url: "/privacy_policy" },
+    { link: "Cookie Policy", url: "/cookie_policy" },
   ];
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
           start: () => `${mainContainerHeight - footerTriggerThreshold}px`, // When bottom of content hits bottom of viewport
           end: () => `${mainContainerHeight - footerTriggerThreshold}px`, // When bottom of content hits top of viewport
           scrub: 1, // Smooth scroll-linked animation
-          markers: true,
+          markers: false,
           onUpdate: (self) => {
             // Optional: log progress for debugging
             console.log("Footer animation progress:", self.progress);

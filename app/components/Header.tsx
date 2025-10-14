@@ -38,7 +38,7 @@ const Header = () => {
         <Hamburger toggled={isOpen} toggle={setOpen} color="white" />
       </button> */}
       <Menu></Menu>
-      <Link to="/">
+      <Link to="/" prefetch="intent">
         <img loading="lazy" src={logo} />
       </Link>
       <button
