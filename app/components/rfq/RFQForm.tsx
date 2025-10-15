@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
+import CountryCombobox from "../ui/CountryCombobox";
 
 type FormValues = {
   firstName: string;
@@ -23,6 +24,7 @@ export default function RFQForm(formClass: { formClass?: string }) {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -36,6 +38,12 @@ export default function RFQForm(formClass: { formClass?: string }) {
 
   const [mainFileName, setMainFileName] = useState<string>("");
   const [additionalFileName, setAdditionalFileName] = useState<string>("");
+
+  const { field: countryField } = useController({
+    name: "country",
+    control,
+    rules: { required: true },
+  });
 
   return (
     <form
@@ -74,6 +82,9 @@ export default function RFQForm(formClass: { formClass?: string }) {
           {...register("companyName", { required: true })}
           className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
+        {errors.companyName && (
+          <p className="text-red-500 text-xs mt-1">Required</p>
+        )}
       </div>
 
       <div>
@@ -85,11 +96,12 @@ export default function RFQForm(formClass: { formClass?: string }) {
           {...register("email", { required: true })}
           className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
+        {errors.email && <p className="text-red-500 text-xs mt-1">Required</p>}
       </div>
 
       <div>
         <label className="block text-sm font-medium text-[#464646] mb-2">
-          Phone Number*
+          Phone Number
         </label>
         <input
           type="tel"
@@ -102,15 +114,17 @@ export default function RFQForm(formClass: { formClass?: string }) {
         <label className="block text-sm font-medium text-[#464646] mb-2">
           Country / Region*
         </label>
-        <select
-          {...register("country", { required: true })}
-          className="w-full border border-[#dfdfdf] p-3 bg-grey"
-        >
-          <option value="">-- Select Country/Region --</option>
-          <option value="US">United States</option>
-          <option value="UK">United Kingdom</option>
-          <option value="CA">Canada</option>
-        </select>
+        <CountryCombobox
+          value={countryField.value}
+          onChange={countryField.onChange}
+          onBlur={countryField.onBlur}
+          error={!!errors.country}
+          placeholder="-- Select Country/Region --"
+          name="country"
+        />
+        {errors.country && (
+          <p className="text-red-500 text-xs mt-1">Required</p>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-4 mt-12">
