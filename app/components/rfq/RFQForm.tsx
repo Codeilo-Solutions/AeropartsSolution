@@ -26,14 +26,83 @@ export default function RFQForm(formClass: { formClass?: string }) {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm<FormValues>();
 
   const { ref: mainFileRef, ...mainFileRest } = register("fileMain");
   const { ref: additionalFileRef, ...additionalFileRest } =
     register("fileAdditional");
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
+
+  const onSubmit = async (data: FormValues) => {
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      // Create FormData for file uploads
+      const formData = new FormData();
+
+      // Append all text fields
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
+      formData.append("companyName", data.companyName);
+      formData.append("email", data.email);
+      formData.append("phone", data.phone);
+      formData.append("country", data.country);
+      formData.append("aircraftType", data.aircraftType || "");
+      formData.append("partNumber", data.partNumber || "");
+      formData.append("quantity", data.quantity?.toString() || "");
+      formData.append("priority", data.priority || "");
+      formData.append("description", data.description || "");
+      formData.append("confirmDetails", data.confirmDetails.toString());
+      formData.append("agreeTerms", data.agreeTerms.toString());
+
+      // Append files if they exist
+      if (data.fileMain?.[0]) {
+        formData.append("fileMain", data.fileMain[0]);
+      }
+      if (data.fileAdditional?.[0]) {
+        formData.append("fileAdditional", data.fileAdditional[0]);
+      }
+
+      const response = await fetch(
+        "https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/contact-form-rfq/",
+        {
+          method: "POST",
+          body: formData,
+          // Don't set Content-Type header - browser will set it with boundary for multipart/form-data
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit request");
+      }
+
+      const result = await response.json();
+      console.log(result);
+      setSubmitStatus({
+        type: "success",
+        message: "Quote request submitted successfully!",
+      });
+
+      // Optional: Reset form after success
+      reset();
+      setMainFileName("");
+      setAdditionalFileName("");
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitStatus({
+        type: "error",
+        message: "Failed to submit request. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const [mainFileName, setMainFileName] = useState<string>("");
@@ -263,11 +332,24 @@ export default function RFQForm(formClass: { formClass?: string }) {
         </label>
       </div>
 
+      {submitStatus.type && (
+        <div
+          className={`p-4 rounded ${
+            submitStatus.type === "success"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
+          }`}
+        >
+          {submitStatus.message}
+        </div>
+      )}
+
       <button
         type="submit"
-        className="w-full bg-secondary text-white py-2 hover:bg-[#b98a3a] transition cursor-pointer"
+        disabled={isSubmitting}
+        className="w-full bg-secondary text-white py-2 hover:bg-[#b98a3a] transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        SUBMIT
+        {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
       </button>
     </form>
   );
