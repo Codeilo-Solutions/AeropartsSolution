@@ -3,7 +3,7 @@ import footerPlaneImg from "../../assets/images/sections/plane-transparent.png";
 import { useEffect } from "react";
 import Socials from "./Socials";
 
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -28,9 +28,9 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
   const footerLinks = [
     { link: "Home", url: "/" },
     { link: "About Us", url: "/about" },
-    { link: "Careers", url: "/careers" },
+    // { link: "Careers", url: "/careers" },
     { link: "Contact Us", url: "/contact" },
-    { link: "Solutions", url: "/solutions" },
+    // { link: "Solutions", url: "/solutions" },
     { link: "Terms of Service", url: "/terms_of_service" },
     { link: "Privacy Policy", url: "/privacy_policy" },
     { link: "Cookie Policy", url: "/cookie_policy" },
@@ -158,10 +158,10 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
       <hr className="text-white/10 text-lg my-6" />
 
       <div className="footerBottomSection text-white mt-10 container mx-auto">
-        <div className="footerLinks flex gap-x-12 gap-y-4 flex-wrap">
+        <div className="footerLinks flex gap-x-24 gap-y-4 flex-wrap">
           <div className="footerLinkSection">
             <h2 className="text-lg text-secondary">AOG Desk:</h2>
-            <ul className=" lg:grid lg:grid-cols-2 gap-x-4 gap-y-1 text-xs">
+            <ul className=" lg:grid lg:grid-cols-2 gap-x-8 gap-y-3 mt-4 text-xs">
               {footerLocations.map((location) => (
                 <li key={location}>{location}</li>
               ))}
@@ -169,16 +169,19 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
           </div>
           <div className="footerLinkSection">
             <h2 className="text-lg text-secondary">Quick Links</h2>
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-3 mt-4 text-xs">
               {footerLinks.map((link) => (
                 <li key={link.link}>
-                  <a href={link.url}> - {link.link}</a>
+                  <Link to={link.url} className="group">
+                    {" "}
+                    - <span className="group-hover:underline">{link.link}</span>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
           <div className="footerLinkSection">
-            <h2 className="text-lg text-secondary">Follow Us</h2>
+            <h2 className="text-lg text-secondary mb-4">Follow Us</h2>
             <Socials />
           </div>
         </div>

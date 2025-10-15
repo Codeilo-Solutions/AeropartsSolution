@@ -1,7 +1,8 @@
-import icon1 from "../../../assets/images/001-jet-plane.png";
-import icon2 from "../../../assets/images/003-private.png";
-import icon3 from "../../../assets/images/005-worldwide.png";
-import arrowIcon from "../../../assets/images/right-arrow.png";
+import icon1 from "~/../assets/images/SVGs/b2b.svg";
+import icon2 from "~/../assets/images/SVGs/b2c.svg";
+import icon3 from "~/../assets/images/SVGs/freight-solutions.svg";
+import arrowIcon from "~/../assets/images/right-arrow.png";
+import { FadeUp } from "~/components/ui/FadeUtil.client";
 
 const SolutionSection = () => {
   const solutionData = [
@@ -28,23 +29,26 @@ const SolutionSection = () => {
     <section className="imgSection bg-light w-screen py-41">
       <div className="container mx-auto bg-transparent">
         <div className="grid lg:grid-cols-3 gap-10">
-          {solutionData.map((data) => (
-            <div
+          {solutionData.map((data, index) => (
+            <FadeUp
               key={data.title}
-              className="solutionCard bg-white flex flex-col gap-4 px-12 py-8 text-primary"
+              delay={index * 0.3}
+              className="h-full flex"
             >
-              <img src={data.icon} alt="" height={42} width={42} />
-              <h1 className="text-2xl font-normal">{data.title}</h1>
-              <p className="text-sm font-normal">{data.desc}</p>
-              <a className="contents" href={data.redirectUrl}>
-                <img
-                  src={arrowIcon}
-                  width={32}
-                  height={32}
-                  className="mt-auto pt-8"
-                ></img>
-              </a>
-            </div>
+              <div className="solutionCard bg-white flex flex-col gap-4 px-12 py-8 text-primary hover:shadow-lg transition-all">
+                <img src={data.icon} alt="" height={42} width={42} />
+                <h1 className="text-2xl font-normal">{data.title}</h1>
+                <p className="text-sm font-normal">{data.desc}</p>
+                <a className="contents" href={data.redirectUrl}>
+                  <img
+                    src={arrowIcon}
+                    width={32}
+                    height={32}
+                    className="mt-auto pt-8"
+                  ></img>
+                </a>
+              </div>
+            </FadeUp>
           ))}
         </div>
       </div>

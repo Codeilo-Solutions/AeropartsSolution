@@ -1,8 +1,9 @@
 import type { Route } from "./+types/Contact";
 import Banner from "~/components/Banner";
-import BannerImg from "~/../assets/images/Rectangle 1.png";
+import BannerImg from "~/../assets/images/contact-bg.jpg";
 import ContactForm from "~/components/contact/ContactForm";
 import favIcon from "~/../assets/images/aero-icon.svg";
+import { FadeLeft, FadeRight } from "~/components/ui/FadeUtil.client";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,32 +23,36 @@ const Contact = () => {
 
       <section className="bg-white">
         <div className="container mx-auto grid lg:grid-cols-2 py-20 gap-y-10">
-          <div className="formDetails text-[#494949] max-w-max max-h-max  rounded-r-[30px] relative ">
-            <p className="grid gap-6 mt-8">
-              <span>
-                <strong className="font-bold">Head Office</strong>
-                <br />
-                Aeroparts Solutions <br />
-                Dubai Airport Freezone (DAFZA), Dubai, UAE
-              </span>
-              <span>
-                <strong className=""> Phone:</strong>
-                +971 50 219 3737 <br />
-                +971 50 536 3659
-              </span>
-              <span>
-                <strong className="font-bold">Email</strong> <br />
-                info@aeropartssolution.com
-              </span>
+          <FadeRight>
+            <div className="formDetails text-[#494949] max-w-max max-h-max mx-auto  rounded-r-[30px] relative ">
+              <p className="grid gap-6 mt-8">
+                <span>
+                  <strong className="font-bold">Head Office</strong>
+                  <br />
+                  Aeroparts Solutions <br />
+                  Dubai Airport Freezone (DAFZA), Dubai, UAE
+                </span>
+                <span>
+                  <strong className=""> Phone:</strong>
+                  +971 50 219 3737 <br />
+                  +971 50 536 3659
+                </span>
+                <span>
+                  <strong className="font-bold">Email</strong> <br />
+                  info@aeropartssolution.com
+                </span>
 
-              <span>
-                <strong className="font-bold">Working Hours</strong> <br />
-                Monday – Friday: 9:00 AM – 6:00 PM (UAE Time) <br />
-                AOG Support: 24/7
-              </span>
-            </p>
-          </div>
-          <ContactForm></ContactForm>
+                <span>
+                  <strong className="font-bold">Working Hours</strong> <br />
+                  Monday – Friday: 9:00 AM – 6:00 PM (UAE Time) <br />
+                  AOG Support: 24/7
+                </span>
+              </p>
+            </div>
+          </FadeRight>
+          <FadeLeft>
+            <ContactForm></ContactForm>
+          </FadeLeft>
         </div>
       </section>
       <section className="pt-20 bg-primary text-white">

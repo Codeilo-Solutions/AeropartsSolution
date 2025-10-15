@@ -36,7 +36,7 @@ const Socials = ({ liClass, contextValue }: socialProps) => {
           {footerSocials.map((social, index) => (
             <li
               key={index}
-              className={`p-1 rounded-full bg-white cursor-pointer ${liClass}`}
+              className={`p-1 rounded-full bg-white cursor-pointer hover:scale-[1.1] transition-all ${liClass}`}
             >
               <a href={social.url} className="contents">
                 {social.icon}

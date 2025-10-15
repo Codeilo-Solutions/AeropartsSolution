@@ -35,7 +35,16 @@ import {
 import RFQForm from "../rfq/RFQForm";
 import Slider from "../Slider.client";
 
+type data = {};
+
 const Banner = () => {
+  const data = {
+    titleText: "Trusted parts for global skies.",
+    description:
+      "Supplying premium aircraft components for private and commercial fleets worldwide.",
+    searchBtnText: "Search Now",
+  };
+
   const planeRef = useRef<HTMLImageElement>(null);
   const bgCloudsRef = useRef<HTMLImageElement>(null);
   const cloudsRef = useRef<HTMLImageElement>(null);
@@ -168,13 +177,8 @@ const Banner = () => {
 
       <div className="planeWrapper w-full h-dvh mt-auto flex flex-col">
         <div className="searchContainer w-screen relative text-center my-auto lg:mb-0 text-white flex flex-col gap-2 container mx-auto ">
-          <h1 className="text-5xl md:text-7xl font-bold">
-            Trusted parts for global skies.
-          </h1>
-          <p className="font-medium ">
-            Supplying premium aircraft components for private and commercial
-            fleets worldwide.
-          </p>
+          <h1 className="text-5xl md:text-7xl font-bold">{data.titleText}</h1>
+          <p className="font-medium ">{data.description}</p>
           <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto mt-4">
             <input
               type="text"
@@ -182,23 +186,23 @@ const Banner = () => {
               className="flex-1 bg-transparent placeholder-gray-300 text-white px-4 py-2 rounded-full focus:outline-none"
             />
             <Dialog>
-              <DialogTrigger className="rounded-full bg-[#52bcd6] max-w-max px-6 py-2 mx-1 text-white font-medium shadow z-1">
-                Search Now
+              <DialogTrigger className="rounded-full bg-[#52bcd6] hover:bg-[#3f92a7] max-w-max px-6 py-2 mx-1 text-white font-medium shadow z-1 transition-colors cursor-pointer">
+                {data.searchBtnText}
               </DialogTrigger>
-              <DialogContent className="bg-white max-h-[80dvh] overflow-auto">
+              <DialogContent className="bg-white max-h-[80dvh] overflow-auto px-12 py-12">
                 <DialogHeader>
                   <DialogTitle>Request For Quote</DialogTitle>
                   <div>
                     <div className="mt-4 space-y-4">
                       {/* <!-- Product info (static display) --> */}
-                      <div>
+                      {/* <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                           Product
                         </label>
                         <div className="p-2 bg-gray-100 border rounded text-sm text-gray-800">
                           Product Name or SKU: <strong>ABC-1234</strong>
                         </div>
-                      </div>
+                      </div> */}
 
                       {/* <!-- RFQ Form --> */}
                       {/* <form

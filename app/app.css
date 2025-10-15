@@ -88,6 +88,15 @@ body {
   display: flex;
   flex-direction: column;
   font-family: var(--font-lato);
+  accent-color: var(--color-secondary);
+  caret-color: var(--color-secondary);
+}
+
+::selection {
+  background-color: var(
+    --color-secondary
+  ); /* Sets the background of selected text to yellow */
+  color: white; /* Sets the color of selected text to black */
 }
 
 * {
