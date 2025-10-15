@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 // import { Divide as Hamburger } from "hamburger-react";
-import logo from "../../assets/images/Logo.png";
+import logo from "../../assets/images/SVGs/Logo-aeroparts.svg";
 import { Link, useNavigate } from "react-router";
 import Menu from "~/components/Menu";
 
@@ -39,10 +39,10 @@ const Header = () => {
       </button> */}
       <Menu></Menu>
       <Link to="/" prefetch="intent">
-        <img loading="lazy" src={logo} />
+        <img loading="lazy" src={logo} height={67} width={203} />
       </Link>
       <button
-        className="cursor-pointer bg-white rounded-full px-4 py-2 capitalize max-md:hidden"
+        className="cursor-pointer bg-white hover:bg-[#d6d6d6] rounded-full px-4 py-2 capitalize max-md:hidden transition-colors"
         onClick={handleQuoteClick}
       >
         Request a Quote

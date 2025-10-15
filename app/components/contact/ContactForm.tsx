@@ -24,59 +24,71 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-md mx-auto bg-white-lg space-y-4"
+      className="w-[min(100%,_550px)] mr-auto bg-white-lg space-y-4"
     >
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium">First Name*</label>
+          <label className="block text-sm font-medium text-[#464646] mb-2">
+            First Name*
+          </label>
           <input
             {...register("firstName", { required: true })}
-            className="w-full border border-[#dfdfdf] p-2 bg-grey"
+            className="w-full border border-[#dfdfdf] p-3 bg-grey"
           />
           {errors.firstName && (
             <p className="text-red-500 text-xs mt-1">Required</p>
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium">Last Name</label>
+          <label className="block text-sm font-medium text-[#464646] mb-2">
+            Last Name
+          </label>
           <input
             {...register("lastName")}
-            className="w-full border border-[#dfdfdf] p-2 bg-grey"
+            className="w-full border border-[#dfdfdf] p-3 bg-grey"
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Company Name*</label>
+        <label className="block text-sm font-medium text-[#464646] mb-2">
+          Company Name*
+        </label>
         <input
           {...register("companyName", { required: true })}
-          className="w-full border border-[#dfdfdf] p-2 bg-grey"
+          className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Email Address*</label>
+        <label className="block text-sm font-medium text-[#464646] mb-2">
+          Email Address*
+        </label>
         <input
           type="email"
           {...register("email", { required: true })}
-          className="w-full border border-[#dfdfdf] p-2 bg-grey"
+          className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Phone Number*</label>
+        <label className="block text-sm font-medium text-[#464646] mb-2">
+          Phone Number*
+        </label>
         <input
           type="tel"
           {...register("phone", { required: true })}
-          className="w-full border border-[#dfdfdf] p-2 bg-grey"
+          className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Subject*</label>
+        <label className="block text-sm font-medium text-[#464646] mb-2">
+          Subject*
+        </label>
         <select
           {...register("subject", { required: true })}
-          className="w-full border border-[#dfdfdf] p-2 bg-grey"
+          className="w-full border border-[#dfdfdf] p-3 bg-grey"
         >
           <option value="general-inquiry">General Inquiry</option>
           <option value="complaints">Complaints</option>
@@ -84,11 +96,13 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium">Message</label>
+        <label className="block text-sm font-medium text-[#464646] mb-2">
+          Message
+        </label>
         <textarea
           {...register("message")}
           rows={3}
-          className="w-full border border-[#dfdfdf] p-2 bg-grey"
+          className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
       </div>
 
