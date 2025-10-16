@@ -2,6 +2,12 @@ import mapImg from "../../../assets/images/map.png";
 import { FadeLeft, FadeRight } from "../ui/FadeUtil.client";
 
 const OurLocation = () => {
+  const data = {
+    titleText: "Our Location",
+    subTitleText: "Our Head Office, Other office around the world",
+    description:
+      "We deliver world-class solutions worldwide, while keeping our focus on individual customer needs.",
+  };
   return (
     <section className="imgSection bg-[#fff] w-screen py-41">
       <div className="container mx-auto bg-transparent grid lg:grid-cols-[2fr_5fr]">
@@ -15,18 +21,15 @@ const OurLocation = () => {
                 // "--bottom": "-0.25lh",
               }}
             >
-              Our Location
+              {data.titleText}
             </h1>
             <h2 className="text-4xl font-bold mt-12 mb-2">
-              Our Head Office, Other office around the world
+              {data.subTitleText}
             </h2>
-            <p>
-              We deliver world-class solutions worldwide, while keeping our
-              focus on individual customer needs.
-            </p>
+            <p>{data.description}</p>
           </div>
         </FadeRight>
-        <FadeLeft>
+        <FadeLeft className="max-lg:mt-6">
           <img src={mapImg} alt="" />
         </FadeLeft>
       </div>

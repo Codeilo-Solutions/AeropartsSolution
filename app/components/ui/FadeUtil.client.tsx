@@ -1,4 +1,10 @@
-import { useRef, type ReactNode, type RefObject } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -25,6 +31,24 @@ export const FadeUp: React.FC<FadeUpProps> = ({
   const el = useRef<HTMLDivElement>(null);
   const animationTarget = targetRef || el;
 
+  const [delayState, setDelayState] = useState(delay);
+  useEffect(() => {
+    if (window.innerWidth < 1000) {
+      setDelayState(0);
+    }
+    const handleResize = () => {
+      if (window.innerWidth < 1000) {
+        setDelayState(0);
+      } else {
+        setDelayState(delay);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [delay]);
+
   useGSAP(() => {
     if (!animationTarget.current) return;
 
@@ -38,7 +62,7 @@ export const FadeUp: React.FC<FadeUpProps> = ({
         opacity: 1,
         y: 0,
         duration,
-        delay,
+        delayState,
         ease: "power3.out",
         scrollTrigger: {
           trigger: animationTarget.current,
@@ -47,7 +71,7 @@ export const FadeUp: React.FC<FadeUpProps> = ({
         },
       }
     );
-  }, [delay, duration, y, animationTarget.current]);
+  }, [delayState, duration, y, animationTarget.current]);
 
   return targetRef ? (
     <>{children}</>

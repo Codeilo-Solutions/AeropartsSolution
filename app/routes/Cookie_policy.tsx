@@ -1,4 +1,4 @@
-import type { Route } from "./+types/Terms_of_service";
+import type { Route } from "./+types/Cookie_policy";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/Rectangle 1.png";
 import parse from "html-react-parser";
@@ -6,14 +6,14 @@ import DOMPurify from "dompurify";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Terms Of Service" },
-    { name: "description", content: "Terms of Service" },
+    { title: "Cookie Policy" },
+    { name: "description", content: "Cookie Policy" },
   ];
 }
 
-const Terms_of_service = () => {
+const Cookie_policy = () => {
   const data = {
-    bannerTitle: "Privacy Policy",
+    bannerTitle: "Cookie Policy",
     bannerImg: BannerImg,
     description: `<p>
               Welcome to Aeroparts Solutions. By using our website and services,
@@ -79,4 +79,4 @@ const Terms_of_service = () => {
   );
 };
 
-export default Terms_of_service;
+export default Cookie_policy;

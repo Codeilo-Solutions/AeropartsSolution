@@ -1,5 +1,7 @@
 import type { Route } from "./+types/About";
 import Banner from "~/components/Banner";
+import createDOMPurify from "isomorphic-dompurify";
+import parse from "html-react-parser";
 import BannerImg from "~/../assets/images/aboutus-bg.jpg";
 
 import company1Img from "~/../assets/images/company1.png";
@@ -40,33 +42,79 @@ export default function About() {
     company13Img,
     company14Img,
   });
+
+  const data = {
+    banner: {
+      title: "Who are we?",
+      desc: "Trusted Aviation Partner for Certified Aircraft Components",
+    },
+    intro: {
+      heading: "Reliable and Fast Delivery of Certified Aircraft Parts",
+      paragraph: `Aeroparts Solutions is a global aviation parts supplier headquartered in Dubai Airport Freezone (DAFZA), the heart of the Middle East’s aviation hub. We specialize in sourcing, distributing, and delivering certified aircraft components to airlines, MROs, leasing companies, and aviation professionals worldwide. <br /><br />Our commitment goes beyond parts supply — we deliver compliance, transparency, and reliability at every step. With a team of aviation specialists and a network of global partners, we help ensure your fleet stays in the sky with minimal downtime.`,
+    },
+    mission: {
+      title: "Our Mission",
+      paragraph:
+        "To provide fast, reliable, and fully traceable aircraft components, ensuring maximum safety and operational efficiency for our clients worldwide.",
+    },
+    vision: {
+      title: "Our Vision",
+      paragraph:
+        "To become the most trusted aviation supply partner in the industry, recognized for our commitment to compliance, customer service, and global reach.",
+    },
+    whatSetsApart: {
+      heading: "What Sets Us Apart",
+      list: [
+        `
+          <strong>Global Reach</strong> – Based in Dubai, with connections to major aviation hubs across Europe, Asia, and North America.
+        `,
+        `
+          <strong>Compliance First</strong> – Every part we supply comes with FAA, EASA, and OEM certifications to ensure airworthiness and traceability.
+        `,
+        `
+          <strong>Customer-Centric Approach</strong> – From urgent AOG support to planned inventory supply, we adapt to your operational needs.
+        `,
+        `
+          <strong>Proven Reliability</strong> – Trusted by airlines, MROs, and aviation companies across multiple regions.
+        `,
+      ],
+    },
+  } as const;
+
+  // Use DOMPurify + html-react-parser to safely sanitize and parse HTML-like strings
+  const DOMPurify = createDOMPurify(
+    typeof window === "undefined" ? (globalThis as any).window : window
+  );
+  function safeParseHtml(html: string) {
+    const clean = DOMPurify.sanitize(html, {
+      ALLOWED_TAGS: ["strong", "span", "br", "em", "b", "i", "u", "a"],
+      ALLOWED_ATTR: ["class", "href", "target", "rel"],
+    });
+    return parse(clean, {
+      replace: (domNode: any) => {
+        // Optionally, normalize tags or add props here. Returning undefined uses default behavior.
+        return undefined;
+      },
+    });
+  }
+
   return (
     <>
       <Banner
         bgImgUrl={BannerImg}
-        title="Who are we?"
-        desc="Trusted Aviation Partner for Certified Aircraft Components"
+        title={data.banner.title}
+        desc={data.banner.desc}
       />
       <section className="bg-white text-center">
         <div className="container mx-auto py-20 lg:py-40 max-w-[65ch]">
           <FadeUp>
             <h1 className="max-w-[25ch] text-4xl text-primary font-black">
-              Reliable and Fast Delivery of Certified Aircraft Parts
+              {data.intro.heading}
             </h1>
           </FadeUp>
           <FadeUp delay={0.3}>
             <p className="mt-8 text-[#363636] text-lg">
-              Aeroparts Solutions is a global aviation parts supplier
-              headquartered in Dubai Airport Freezone (DAFZA), the heart of the
-              Middle East’s aviation hub. We specialize in sourcing,
-              distributing, and delivering certified aircraft components to
-              airlines, MROs, leasing companies, and aviation professionals
-              worldwide. <br />
-              <br />
-              Our commitment goes beyond parts supply — we deliver compliance,
-              transparency, and reliability at every step. With a team of
-              aviation specialists and a network of global partners, we help
-              ensure your fleet stays in the sky with minimal downtime.
+              {safeParseHtml(data.intro.paragraph)}
             </p>
           </FadeUp>
         </div>
@@ -79,13 +127,9 @@ export default function About() {
                 className="text-4xl font-black underlineDecor"
                 style={{ "--height": "4px", "--backgroundColor": "white" }}
               >
-                Our Mission
+                {data.mission.title}
               </h1>
-              <p className="mt-16 text-lg">
-                To provide fast, reliable, and fully traceable aircraft
-                components, ensuring maximum safety and operational efficiency
-                for our clients worldwide.
-              </p>
+              <p className="mt-16 text-lg">{data.mission.paragraph}</p>
             </div>
           </FadeRight>
           <FadeLeft>
@@ -94,13 +138,9 @@ export default function About() {
                 className="text-4xl font-black underlineDecor"
                 style={{ "--height": "4px", "--backgroundColor": "white" }}
               >
-                Our Vision
+                {data.vision.title}
               </h1>
-              <p className="mt-16 text-lg">
-                To become the most trusted aviation supply partner in the
-                industry, recognized for our commitment to compliance, customer
-                service, and global reach.
-              </p>
+              <p className="mt-16 text-lg">{data.vision.paragraph}</p>
             </div>
           </FadeLeft>
         </div>
@@ -109,30 +149,16 @@ export default function About() {
       <section className="bg-white text-primary">
         <div className="container mx-auto py-20 lg:py-40 grid lg:grid-cols-3">
           <FadeUp>
-            <h1 className=" text-4xl font-black">What Sets Us Apart</h1>
+            <h1 className=" text-4xl font-black">
+              {data.whatSetsApart.heading}
+            </h1>
           </FadeUp>
           <div className="listWrapper lg:col-span-[2] w-full flex">
             <FadeUp delay={0.3} className="lg:mx-auto">
-              <ul className="list-disc mt-16 lg:mt-0 space-y-4 text-lg max-w-[60ch] lg:mx-auto">
-                <li>
-                  <strong>Global Reach</strong> – Based in Dubai, with
-                  connections to major aviation hubs across Europe, Asia, and
-                  North America.
-                </li>
-                <li>
-                  <strong>Compliance First</strong> – Every part we supply comes
-                  with FAA, EASA, and OEM certifications to ensure airworthiness
-                  and traceability.
-                </li>
-                <li>
-                  <strong>Customer-Centric Approach</strong> – From urgent AOG
-                  support to planned inventory supply, we adapt to your
-                  operational needs.
-                </li>
-                <li>
-                  <strong>Proven Reliability</strong> – Trusted by airlines,
-                  MROs, and aviation companies across multiple regions.
-                </li>
+              <ul className="list-disc mt-16 lg:mt-0 space-y-4 text-lg max-w-[60ch] lg:mx-auto max-lg:ms-6">
+                {data.whatSetsApart.list.map((item, idx) => (
+                  <li key={idx}>{safeParseHtml(item)}</li>
+                ))}
               </ul>
             </FadeUp>
           </div>

@@ -256,7 +256,7 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
           </div>
         </div>
 
-        <div className="copyrights flex justify-between text-xs font-light">
+        <div className="copyrights flex justify-between text-xs font-light mt-4">
           <p>
             &copy; {new Date().getFullYear()} Aeroparts. All rights reserved.
           </p>

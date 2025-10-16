@@ -1,4 +1,4 @@
-import type { Route } from "./+types/Terms_of_service";
+import type { Route } from "./+types/Privacy_policy";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/Rectangle 1.png";
 import parse from "html-react-parser";
@@ -6,12 +6,12 @@ import DOMPurify from "dompurify";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Terms Of Service" },
-    { name: "description", content: "Terms of Service" },
+    { title: "Privacy Policy" },
+    { name: "description", content: "Privacy Policy" },
   ];
 }
 
-const Terms_of_service = () => {
+const Privacy_policy = () => {
   const data = {
     bannerTitle: "Privacy Policy",
     bannerImg: BannerImg,
@@ -79,4 +79,4 @@ const Terms_of_service = () => {
   );
 };
 
-export default Terms_of_service;
+export default Privacy_policy;
