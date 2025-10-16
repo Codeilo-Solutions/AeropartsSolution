@@ -1,6 +1,6 @@
 import footerLogoImg from "../../assets/images/FooterLogo.png";
 import footerPlaneImg from "../../assets/images/sections/plane-transparent.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Socials from "./Socials";
 
 import { Link, useLocation } from "react-router";
@@ -17,6 +17,13 @@ type propType = {
 
 const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
   const location = useLocation();
+
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
   const footerLocations = [
     "France: +33 (XXX) XXX XXXX",
@@ -35,6 +42,47 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
     { link: "Privacy Policy", url: "/privacy_policy" },
     { link: "Cookie Policy", url: "/cookie_policy" },
   ];
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      const formData = new FormData();
+      formData.append("email", email);
+
+      const response = await fetch(
+        `https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/mailchimp/`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to subscribe");
+      }
+
+      const result = await response.json();
+      console.log(result);
+      setSubmitStatus({
+        type: "success",
+        message: "Successfully subscribed!",
+      });
+
+      // Reset email after success
+      setEmail("");
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitStatus({
+        type: "error",
+        message: "Failed to subscribe. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const checkFooterHeight = () => {
@@ -133,19 +181,41 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
         <div className="footerTopSection text-white text-center">
           <h1 className="text-5xl lg:text-7xl font-black">Stay in the Loop</h1>
           <p className="text-lg font-light">
-            Join our newsletter to keep up with Aeroparts’ latest news and
+            Join our newsletter to keep up with Aeroparts' latest news and
             insights.
           </p>
-          <div className="inputHolder mt-6 flex gap-4 justify-center">
+          <form
+            onSubmit={handleNewsletterSubmit}
+            className="inputHolder mt-6 flex gap-4 justify-center"
+          >
             <input
-              type="text"
+              type="email"
               placeholder="Email Address here"
-              className="text-black bg-white px-4 py-2 rounded-full lg:w-64"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={isSubmitting}
+              className="text-black bg-white px-4 py-2 rounded-full lg:w-64 disabled:opacity-50"
             />
-            <button className="uppercase bg-[#1a2e45ce] px-4 py-2 rounded-full lg:w-32 cursor-pointer hover:bg-[#1a2e45]">
-              Subscribe
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="uppercase bg-[#1a2e45ce] px-4 py-2 rounded-full lg:w-32 cursor-pointer hover:bg-[#1a2e45] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "..." : "Subscribe"}
             </button>
-          </div>
+          </form>
+          {submitStatus.type && (
+            <div
+              className={`mt-4 p-3 rounded text-sm ${
+                submitStatus.type === "success"
+                  ? "text-green-800"
+                  : "text-red-800"
+              }`}
+            >
+              {submitStatus.message}
+            </div>
+          )}
         </div>
 
         <div className="planeHolder" ref={planeHolderRef}>
