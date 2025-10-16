@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormValues = {
@@ -15,10 +16,62 @@ export default function ContactForm() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormValues>();
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
+
+  const onSubmit = async (data: FormValues) => {
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    try {
+      // Create FormData
+      const formData = new FormData();
+
+      // Append all fields
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName || "");
+      formData.append("companyName", data.companyName);
+      formData.append("email", data.email);
+      formData.append("phone", data.phone);
+      formData.append("subject", data.subject);
+      formData.append("message", data.message || "");
+
+      const response = await fetch(
+        `https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/contact-form/`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit message");
+      }
+
+      const result = await response.json();
+      console.log(result);
+      setSubmitStatus({
+        type: "success",
+        message: "Message submitted successfully!",
+      });
+
+      // Reset form after success
+      reset();
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitStatus({
+        type: "error",
+        message: "Failed to submit message. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -58,6 +111,9 @@ export default function ContactForm() {
           {...register("companyName", { required: true })}
           className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
+        {errors.companyName && (
+          <p className="text-red-500 text-xs mt-1">Required</p>
+        )}
       </div>
 
       <div>
@@ -69,6 +125,7 @@ export default function ContactForm() {
           {...register("email", { required: true })}
           className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
+        {errors.email && <p className="text-red-500 text-xs mt-1">Required</p>}
       </div>
 
       <div>
@@ -80,6 +137,7 @@ export default function ContactForm() {
           {...register("phone", { required: true })}
           className="w-full border border-[#dfdfdf] p-3 bg-grey"
         />
+        {errors.phone && <p className="text-red-500 text-xs mt-1">Required</p>}
       </div>
 
       <div>
@@ -90,9 +148,13 @@ export default function ContactForm() {
           {...register("subject", { required: true })}
           className="w-full border border-[#dfdfdf] p-3 bg-grey"
         >
+          <option value="">-- Select Subject --</option>
           <option value="general-inquiry">General Inquiry</option>
           <option value="complaints">Complaints</option>
         </select>
+        {errors.subject && (
+          <p className="text-red-500 text-xs mt-1">Required</p>
+        )}
       </div>
 
       <div>
@@ -106,11 +168,24 @@ export default function ContactForm() {
         />
       </div>
 
+      {submitStatus.type && (
+        <div
+          className={`p-4 rounded ${
+            submitStatus.type === "success"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
+          }`}
+        >
+          {submitStatus.message}
+        </div>
+      )}
+
       <button
         type="submit"
-        className="w-full bg-secondary text-white py-2 hover:bg-[#b98a3a] transition cursor-pointer"
+        disabled={isSubmitting}
+        className="w-full bg-secondary text-white py-2 hover:bg-[#b98a3a] transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        SUBMIT
+        {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
       </button>
     </form>
   );
