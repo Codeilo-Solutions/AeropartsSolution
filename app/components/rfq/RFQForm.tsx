@@ -59,8 +59,6 @@ export default function RFQForm(formClass: { formClass?: string }) {
       formData.append("quantity", data.quantity?.toString() || "");
       formData.append("priority", data.priority || "");
       formData.append("description", data.description || "");
-      formData.append("confirmDetails", data.confirmDetails.toString());
-      formData.append("agreeTerms", data.agreeTerms.toString());
 
       // Append files if they exist
       if (data.fileMain?.[0]) {
@@ -71,7 +69,8 @@ export default function RFQForm(formClass: { formClass?: string }) {
       }
 
       const response = await fetch(
-        "https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/contact-form-rfq/",
+        // `${import.meta.env.Backend_Base_Url}/contact-form-rfq/`,
+        `https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/contact-form-rfq/`,
         {
           method: "POST",
           body: formData,
@@ -313,6 +312,9 @@ export default function RFQForm(formClass: { formClass?: string }) {
           <span className="ml-2 text-[#464646]">
             I confirm all part details are correct
           </span>
+          {errors.confirmDetails && (
+            <p className="text-red-500 text-xs mt-1">Required</p>
+          )}
         </label>
         <label className="flex items-center gap-3">
           <input
@@ -329,6 +331,9 @@ export default function RFQForm(formClass: { formClass?: string }) {
               Privacy Policy
             </a>
           </span>
+          {errors.agreeTerms && (
+            <p className="text-red-500 text-xs mt-1">Required</p>
+          )}
         </label>
       </div>
 
