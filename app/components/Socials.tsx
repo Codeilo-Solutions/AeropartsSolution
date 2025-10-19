@@ -38,7 +38,7 @@ const Socials = ({ liClass, contextValue }: socialProps) => {
               key={index}
               className={`p-1 rounded-full bg-white cursor-pointer hover:scale-[1.1] transition-all ${liClass}`}
             >
-              <a href={social.url} className="contents">
+              <a href={social.url} className="contents" target="_blank">
                 {social.icon}
               </a>
             </li>

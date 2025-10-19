@@ -5,7 +5,7 @@ import ContactForm from "~/components/contact/ContactForm";
 import favIcon from "~/../assets/images/aero-icon.svg";
 import { FadeLeft, FadeRight } from "~/components/ui/FadeUtil.client";
 import parse from "html-react-parser";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -77,7 +77,10 @@ const Contact = () => {
             {contactData.urgentSupport.title}
           </h1>
           <p className="text-2xl">
-            {parseFloat(DOMPurify.sanitize(contactData.urgentSupport.hotline))}
+            {/* {parse(DOMPurify.sanitize(contactData.urgentSupport.hotline))} */}
+            Call our <span className="text-secondary">24/7</span> hotline at{" "}
+            <span className="text-secondary"> +971 50 219 3737 </span> for
+            immediate assistance.
           </p>
           <img
             src={favIcon}
