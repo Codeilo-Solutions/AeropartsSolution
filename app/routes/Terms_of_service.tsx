@@ -1,6 +1,6 @@
 import type { Route } from "./+types/Terms_of_service";
 import Banner from "~/components/Banner";
-import BannerImg from "~/../assets/images/Rectangle 1.png";
+import BannerImg from "~/../assets/images/policies-bg.jpg";
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 
@@ -13,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
 
 const Terms_of_service = () => {
   const data = {
-    bannerTitle: "Privacy Policy",
+    bannerTitle: "Terms of Service",
     bannerImg: BannerImg,
     description: `<p>
               Welcome to Aeroparts Solutions. By using our website and services,

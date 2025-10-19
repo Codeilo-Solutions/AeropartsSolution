@@ -1,6 +1,6 @@
 import type { Route } from "./+types/Privacy_policy";
 import Banner from "~/components/Banner";
-import BannerImg from "~/../assets/images/Rectangle 1.png";
+import BannerImg from "~/../assets/images/policies-bg.jpg";
 import parse from "html-react-parser";
 import DOMPurify from "dompurify";
 
