@@ -41,12 +41,14 @@ const Header = () => {
       <Link to="/" prefetch="intent">
         <img loading="lazy" src={logo} height={67} width={203} />
       </Link>
-      <button
-        className="cursor-pointer bg-white hover:bg-secondary hover:text-white rounded-full px-4 py-2 capitalize max-md:hidden transition-colors"
-        onClick={handleQuoteClick}
-      >
-        Request a Quote
-      </button>
+      <Link to={"/rfq"} prefetch="intent" className="contents">
+        <button
+          className="cursor-pointer bg-white hover:bg-secondary hover:text-white rounded-full px-4 py-2 capitalize max-md:hidden transition-colors"
+          onClick={handleQuoteClick}
+        >
+          Request a Quote
+        </button>
+      </Link>
       <div className="invisible md:hidden"></div>
     </header>
   );
