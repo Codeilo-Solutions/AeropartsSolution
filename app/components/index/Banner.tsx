@@ -34,7 +34,7 @@ import {
 } from "~/components/ui/dialog";
 import RFQForm from "../rfq/RFQForm";
 import Slider from "../Slider.client";
-import { usePageLoader } from "~/hooks/usePageLoader";
+// import { usePageLoader } from "~/hooks/usePageLoader";
 
 type data = {};
 
@@ -74,12 +74,12 @@ const Banner = () => {
     cloud5Img,
   });
 
-  const { isLoading, isContentReady, signalReady } = usePageLoader();
+  // const { isLoading, isContentReady, signalReady } = usePageLoader();
 
   useGSAP(
     () => {
       // const startAnimations = () => {
-      if (!isContentReady) return;
+      // if (!isContentReady) return;
 
       if (planeRef.current) {
         console.log("GSAP planeRef Init");
@@ -113,13 +113,18 @@ const Banner = () => {
       //   window.removeEventListener("loaderRemoved", startAnimations);
       // };
     },
-    { dependencies: [planeRef.current, isContentReady] }
+    {
+      dependencies: [
+        planeRef.current,
+        // isContentReady
+      ],
+    }
   );
 
   useGSAP(
     () => {
       // const startAnimations = () => {
-      if (!isContentReady) return;
+      // if (!isContentReady) return;
 
       if (bgCloudsRef.current) {
         console.log("GSAP bgCloud Init");
@@ -138,12 +143,18 @@ const Banner = () => {
       //   window.removeEventListener("loaderRemoved", startAnimations);
       // };
     },
-    { scope: bgCloudsRef, dependencies: [bgCloudsRef.current, isContentReady] }
+    {
+      scope: bgCloudsRef,
+      dependencies: [
+        bgCloudsRef.current,
+        // isContentReady
+      ],
+    }
   );
 
   useGSAP(
     () => {
-      if (!isContentReady) return;
+      // if (!isContentReady) return;
       // Use gsap.utils.toArray to get all the img elements within the scope
       const images = gsap.utils.toArray<HTMLImageElement>(
         "img.cloud",
@@ -173,7 +184,13 @@ const Banner = () => {
       //   window.removeEventListener("loaderRemoved", startAnimations);
       // };
     },
-    { scope: cloudsRef, dependencies: [cloudsRef.current, isContentReady] }
+    {
+      scope: cloudsRef,
+      dependencies: [
+        cloudsRef.current,
+        // isContentReady
+      ],
+    }
   );
 
   const [query, setQuery] = useState("");
@@ -203,12 +220,12 @@ const Banner = () => {
     updateUrl(newQuery);
   };
 
-  useEffect(() => {
-    // Signal when your component tree is mounted and rendered
-    requestAnimationFrame(() => {
-      signalReady();
-    });
-  }, [signalReady]);
+  // useEffect(() => {
+  //   // Signal when your component tree is mounted and rendered
+  //   requestAnimationFrame(() => {
+  //     signalReady();
+  //   });
+  // }, [signalReady]);
   return (
     <>
       <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col bg-light">

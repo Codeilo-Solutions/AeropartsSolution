@@ -11,10 +11,10 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { usePageLoader } from "./hooks/usePageLoader";
+// import { usePageLoader } from "./hooks/usePageLoader";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -45,7 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     gsap.registerPlugin(ScrollTrigger);
   }, []);
 
-  const { isLoading, isContentReady, signalReady } = usePageLoader();
+  // const { isLoading, isContentReady, signalReady } = usePageLoader();
 
   return (
     <html lang="en">
@@ -56,17 +56,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Header />
-        <div className="mainContent curtainWrapper" ref={mainRef}>
-          {children}
-          <Footer
-            mainContainerRef={mainRef}
-            footerRef={footerRef}
-            planeHolderRef={planeHolderRef}
-          />
-        </div>
-        <ScrollRestoration />
-        <Scripts />
+        <Suspense fallback={null}>
+          <Header />
+          <div className="mainContent curtainWrapper" ref={mainRef}>
+            {children}
+            <Footer
+              mainContainerRef={mainRef}
+              footerRef={footerRef}
+              planeHolderRef={planeHolderRef}
+            />
+          </div>
+          <ScrollRestoration />
+          <Scripts />
+        </Suspense>
         {/* {isLoading && (
           <div className="loaderContainer fixed inset-0 z-[500] bg-black grid place-content-center">
             <div className="loader z-20"></div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { usePageLoader } from "~/hooks/usePageLoader";
+// import { usePageLoader } from "~/hooks/usePageLoader";
 
 type bannerProps = {
   bgImgUrl: string;
@@ -8,14 +8,14 @@ type bannerProps = {
 };
 
 const Banner = ({ bgImgUrl, title, desc }: bannerProps) => {
-  const { isLoading, isContentReady, signalReady } = usePageLoader();
+  // const { isLoading, isContentReady, signalReady } = usePageLoader();
 
-  useEffect(() => {
-    // Signal when your component tree is mounted and rendered
-    requestAnimationFrame(() => {
-      signalReady();
-    });
-  }, [signalReady]);
+  // useEffect(() => {
+  //   // Signal when your component tree is mounted and rendered
+  //   requestAnimationFrame(() => {
+  //     signalReady();
+  //   });
+  // }, [signalReady]);
 
   return (
     <section
