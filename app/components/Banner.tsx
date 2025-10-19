@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { usePageLoader } from "~/hooks/usePageLoader";
 
 type bannerProps = {
   bgImgUrl: string;
@@ -7,6 +8,15 @@ type bannerProps = {
 };
 
 const Banner = ({ bgImgUrl, title, desc }: bannerProps) => {
+  const { isLoading, isContentReady, signalReady } = usePageLoader();
+
+  useEffect(() => {
+    // Signal when your component tree is mounted and rendered
+    requestAnimationFrame(() => {
+      signalReady();
+    });
+  }, [signalReady]);
+
   return (
     <section
       className="banner min-h-[90vh] flex -mt-[var(--headerHeight,_100px)] relative"

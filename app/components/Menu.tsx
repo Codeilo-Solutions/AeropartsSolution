@@ -77,13 +77,13 @@ const Menu = () => {
 
             {/* Additional Section */}
             <div className="mt-4 pt-4 border-t border-slate-200">
-              <a
-                href="#"
+              <Link
+                to="/privacy_policy"
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors"
                 onClick={() => setOpen(false)}
               >
                 <span className="font-medium">Privacy Policy</span>
-              </a>
+              </Link>
               <div className="px-4 py-3">
                 <Socials
                   liClass="bg-black!"

@@ -34,6 +34,7 @@ import {
 } from "~/components/ui/dialog";
 import RFQForm from "../rfq/RFQForm";
 import Slider from "../Slider.client";
+import { usePageLoader } from "~/hooks/usePageLoader";
 
 type data = {};
 
@@ -73,8 +74,13 @@ const Banner = () => {
     cloud5Img,
   });
 
+  const { isLoading, isContentReady, signalReady } = usePageLoader();
+
   useGSAP(
     () => {
+      // const startAnimations = () => {
+      if (!isContentReady) return;
+
       if (planeRef.current) {
         console.log("GSAP planeRef Init");
         const tlPlane = gsap.timeline();
@@ -99,12 +105,22 @@ const Banner = () => {
             duration: 3,
           });
       }
+      // };
+      // // Wait for loader to be removed
+      // window.addEventListener("loaderRemoved", startAnimations);
+
+      // return () => {
+      //   window.removeEventListener("loaderRemoved", startAnimations);
+      // };
     },
-    { dependencies: [planeRef] }
+    { dependencies: [planeRef.current, isContentReady] }
   );
 
   useGSAP(
     () => {
+      // const startAnimations = () => {
+      if (!isContentReady) return;
+
       if (bgCloudsRef.current) {
         console.log("GSAP bgCloud Init");
         gsap.to("img", {
@@ -114,18 +130,27 @@ const Banner = () => {
           duration: 500,
         });
       }
+      // };
+
+      // window.addEventListener("loaderRemoved", startAnimations);
+
+      // return () => {
+      //   window.removeEventListener("loaderRemoved", startAnimations);
+      // };
     },
-    { scope: bgCloudsRef, dependencies: [bgCloudsRef] }
+    { scope: bgCloudsRef, dependencies: [bgCloudsRef.current, isContentReady] }
   );
 
   useGSAP(
     () => {
+      if (!isContentReady) return;
       // Use gsap.utils.toArray to get all the img elements within the scope
       const images = gsap.utils.toArray<HTMLImageElement>(
         "img.cloud",
         cloudsRef.current
       );
 
+      // const startAnimations = () => {
       // Loop through the array and apply a unique duration to each image
       images.forEach((img, index) => {
         gsap.from(img, {
@@ -140,8 +165,15 @@ const Banner = () => {
           duration: 8 * (index + 1), // duration = 8 * (order + 1)
         });
       });
+      // };
+
+      // window.addEventListener("loaderRemoved", startAnimations);
+
+      // return () => {
+      //   window.removeEventListener("loaderRemoved", startAnimations);
+      // };
     },
-    { scope: cloudsRef, dependencies: [cloudsRef] }
+    { scope: cloudsRef, dependencies: [cloudsRef.current, isContentReady] }
   );
 
   const [query, setQuery] = useState("");
@@ -170,89 +202,98 @@ const Banner = () => {
     setQuery(newQuery);
     updateUrl(newQuery);
   };
+
+  useEffect(() => {
+    // Signal when your component tree is mounted and rendered
+    requestAnimationFrame(() => {
+      signalReady();
+    });
+  }, [signalReady]);
   return (
-    <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col bg-light">
-      <div
-        className="absolute top-0 left-0 w-full h-full pointer-events-none bg-cover bg-center brightness-75"
-        style={{
-          maskImage:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 60%, transparent 100%)",
-          backgroundImage: `url(${skyBgImg})`,
-        }}
-      >
-        {/* <img
+    <>
+      <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col bg-light">
+        <div
+          className="absolute top-0 left-0 w-full h-full pointer-events-none bg-cover bg-center brightness-75"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 60%, transparent 100%)",
+            backgroundImage: `url(${skyBgImg})`,
+          }}
+        >
+          {/* <img
             loading="lazy"
             src={skyBgImg}
             className="object-cover absolute inset-0 w-full h-full"
             alt=""
           /> */}
-        <div className="bgClouds" ref={bgCloudsRef}>
-          <img
-            loading="lazy"
-            src={cloudBgImg}
-            className="absolute top-[30%]"
-            alt=""
-          ></img>
-          <img
-            loading="lazy"
-            src={cloudBgImg}
-            className="absolute -left-[100%] top-[30%]"
-            alt=""
-          ></img>
-        </div>
-      </div>
-
-      <div className="planeWrapper w-full h-dvh mt-auto flex flex-col">
-        <div className="searchContainer w-screen relative text-center my-auto lg:mb-0 text-white flex flex-col gap-2 container mx-auto ">
-          <h1 className="text-5xl md:text-7xl font-bold">{data.titleText}</h1>
-          <p className="font-medium ">{data.description}</p>
-          <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto mt-4">
-            <input
-              type="text"
-              placeholder="Enter part number here.."
-              className="flex-1 bg-transparent placeholder-gray-300 text-white px-4 py-2 rounded-full focus:outline-none"
-              value={query}
-              onChange={handleChange}
-            />
-            <Dialog>
-              <DialogTrigger className="rounded-full bg-[#52bcd6] hover:bg-[#3f92a7] max-w-max px-6 py-2 mx-1 text-white font-medium shadow z-1 transition-colors cursor-pointer">
-                {data.searchBtnText}
-              </DialogTrigger>
-              <DialogContent className="bg-white max-h-[80dvh] overflow-auto px-6 lg:px-12 py-8 lg:py-12">
-                <DialogHeader>
-                  <DialogTitle>{data.dialogTitle}</DialogTitle>
-                  <div>
-                    <div className="mt-4 space-y-4">
-                      <RFQForm />
-                    </div>
-                  </div>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+          <div className="bgClouds" ref={bgCloudsRef}>
+            <img
+              loading="lazy"
+              src={cloudBgImg}
+              className="absolute top-[30%]"
+              alt=""
+            ></img>
+            <img
+              loading="lazy"
+              src={cloudBgImg}
+              className="absolute -left-[100%] top-[30%]"
+              alt=""
+            ></img>
           </div>
         </div>
-        <img
-          loading="lazy"
-          src={planeImg}
-          className="w-[110%] object-scale-down"
-          ref={planeRef}
-        />
-      </div>
-      <div
-        className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-60"
-        ref={cloudsRef}
-      >
-        <Slider companyLogos={companyLogos}></Slider>
-        {cloudImges.map((img, index) => (
+
+        <div className="planeWrapper w-full h-dvh mt-auto flex flex-col">
+          <div className="searchContainer w-screen relative text-center my-auto lg:mb-0 text-white flex flex-col gap-2 container mx-auto ">
+            <h1 className="text-5xl md:text-7xl font-bold">{data.titleText}</h1>
+            <p className="font-medium ">{data.description}</p>
+            <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto mt-4 z-10">
+              <input
+                type="text"
+                placeholder="Enter part number here.."
+                className="flex-1 bg-transparent placeholder-gray-300 text-white px-4 py-2 rounded-full focus:outline-none"
+                value={query}
+                onChange={handleChange}
+              />
+              <Dialog>
+                <DialogTrigger className="rounded-full bg-[#52bcd6] hover:bg-[#3f92a7] max-w-max px-6 py-2 mx-1 text-white font-medium shadow z-1 transition-colors cursor-pointer">
+                  {data.searchBtnText}
+                </DialogTrigger>
+                <DialogContent className="bg-white max-h-[80dvh] overflow-auto px-6 lg:px-12 py-8 lg:py-12">
+                  <DialogHeader>
+                    <DialogTitle>{data.dialogTitle}</DialogTitle>
+                    <div>
+                      <div className="mt-4 space-y-4">
+                        <RFQForm />
+                      </div>
+                    </div>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </div>
+          </div>
           <img
-            className="cloud"
-            src={img}
-            alt={`Company Logo ${index + 1}`}
-            key={index}
+            loading="lazy"
+            src={planeImg}
+            className="w-[110%] object-scale-down"
+            ref={planeRef}
           />
-        ))}
-      </div>
-    </section>
+        </div>
+        <div
+          className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-60"
+          ref={cloudsRef}
+        >
+          <Slider companyLogos={companyLogos}></Slider>
+          {cloudImges.map((img, index) => (
+            <img
+              className="cloud"
+              src={img}
+              alt={`Company Logo ${index + 1}`}
+              key={index}
+            />
+          ))}
+        </div>
+      </section>
+    </>
   );
 };
 
