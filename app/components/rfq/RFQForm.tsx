@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import CountryCombobox from "../ui/CountryCombobox";
+import { useSearchParams, useLocation } from "react-router";
 
 type FormValues = {
   firstName: string;
@@ -25,9 +26,34 @@ export default function RFQForm(formClass: { formClass?: string }) {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
     reset,
   } = useForm<FormValues>();
+
+  const location = useLocation();
+
+  // Get part number from URL parameters
+  const getPartNumberFromURL = () => {
+    if (typeof window === "undefined") return "";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    return (
+      urlParams.get("part_number") ||
+      urlParams.get("partNumber") ||
+      urlParams.get("part") ||
+      urlParams.get("pn") ||
+      ""
+    );
+  };
+
+  // Set part number from URL when component mounts
+  useEffect(() => {
+    const partNumber = getPartNumberFromURL();
+    if (partNumber) {
+      setValue("partNumber", partNumber);
+    }
+  }, [setValue, location]);
 
   const { ref: mainFileRef, ...mainFileRest } = register("fileMain");
   const { ref: additionalFileRef, ...additionalFileRest } =

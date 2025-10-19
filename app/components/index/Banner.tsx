@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 
 import skyBgImg from "../../../assets/images/Rectangle 1.png";
 import planeImg from "../../../assets/images/Plane.png";
@@ -144,6 +144,32 @@ const Banner = () => {
     { scope: cloudsRef, dependencies: [cloudsRef] }
   );
 
+  const [query, setQuery] = useState("");
+
+  // On component mount, read the initial query from the URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.get("pn") || "";
+    setQuery(initialQuery);
+  }, []);
+
+  // Function to update the URL with the current query
+  const updateUrl = (newQuery: string) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (newQuery) {
+      urlParams.set("pn", newQuery);
+    } else {
+      urlParams.delete("pn");
+    }
+    const newUrl = window.location.pathname + "?" + urlParams.toString();
+    window.history.replaceState(null, "", newUrl);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    updateUrl(newQuery);
+  };
   return (
     <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col bg-light">
       <div
@@ -183,8 +209,10 @@ const Banner = () => {
           <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto mt-4">
             <input
               type="text"
-              placeholder="Enter parts number or name here.."
+              placeholder="Enter part number here.."
               className="flex-1 bg-transparent placeholder-gray-300 text-white px-4 py-2 rounded-full focus:outline-none"
+              value={query}
+              onChange={handleChange}
             />
             <Dialog>
               <DialogTrigger className="rounded-full bg-[#52bcd6] hover:bg-[#3f92a7] max-w-max px-6 py-2 mx-1 text-white font-medium shadow z-1 transition-colors cursor-pointer">
