@@ -12,6 +12,22 @@ export function meta({}: Route.MetaArgs) {
 }
 
 const RFQ = () => {
+  const contactInfo = {
+    title: "Contact Our Team",
+    description: "No stress, just support 24/7/365. How can we help you today?",
+    company: "Aeroparts Solutions",
+    address:
+      "Third Floor, 6 East A, Dubai Airport Freezone Dubai, United Arab Emirates",
+    phone: ["+971 50 219 3737", "+971 50 536 3659"],
+    email: "contact@aeropartssolution.com",
+  };
+
+  const dynamicContent = {
+    title: "Dynamic Title",
+    description:
+      "This is a dynamic description that can change based on user input or other factors.",
+  };
+
   return (
     <>
       <Banner
@@ -25,22 +41,15 @@ const RFQ = () => {
           <FadeRight>
             <div className="formDetails bg-grey text-[#494949] lg:w-[85%] max-h-max p-20 pr-24 pl-0 rounded-r-[30px] relative after:content-[''] after:absolute after:w-full after:h-full after:top-0 after:left-1 after:-z-1 after:bg-grey after:-translate-x-full">
               <h1 className="text-primary font-black text-5xl">
-                Contact Our Team
+                {dynamicContent.title}
               </h1>
               <p className="grid gap-6 mt-12">
-                <span>
-                  No stress, just support 24/7/365. How can we help you today?
-                </span>
-                <span className="font-bold">Aeroparts Solutions</span>
-                <span className="max-w-[35ch]">
-                  Third Floor, 6 East A, Dubai Airport Freezone Dubai, United
-                  Arab Emirates
-                </span>
-                <span>
-                  +971 50 219 3737 <br />
-                  +971 50 536 3659
-                </span>
-                <span>contact@aeropartssolution.com</span>
+                <span>{dynamicContent.description}</span>
+                <span>{contactInfo.description}</span>
+                <span className="font-bold">{contactInfo.company}</span>
+                <span className="max-w-[35ch]">{contactInfo.address}</span>
+                <span>{contactInfo.phone.join(" < br /> ")}</span>
+                <span>{contactInfo.email}</span>
               </p>
             </div>
           </FadeRight>

@@ -1,5 +1,5 @@
 import propellerVid from "../../../assets/videos/propeller.mp4";
-import arrowIcon from "../../../assets/images/right-arrow.png";
+import arrowIcon from "../../../assets/images/SVGs/right-arrow.svg";
 import { FadeUp } from "../ui/FadeUtil.client";
 import { Link } from "react-router";
 

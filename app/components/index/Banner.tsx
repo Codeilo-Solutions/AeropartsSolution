@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 
 import skyBgImg from "../../../assets/images/Rectangle 1.png";
 import planeImg from "../../../assets/images/Plane.png";
@@ -43,6 +43,7 @@ const Banner = () => {
     description:
       "Supplying premium aircraft components for private and commercial fleets worldwide.",
     searchBtnText: "Search Now",
+    dialogTitle: "Request For Quote",
   };
 
   const planeRef = useRef<HTMLImageElement>(null);
@@ -143,6 +144,32 @@ const Banner = () => {
     { scope: cloudsRef, dependencies: [cloudsRef] }
   );
 
+  const [query, setQuery] = useState("");
+
+  // On component mount, read the initial query from the URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.get("pn") || "";
+    setQuery(initialQuery);
+  }, []);
+
+  // Function to update the URL with the current query
+  const updateUrl = (newQuery: string) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (newQuery) {
+      urlParams.set("pn", newQuery);
+    } else {
+      urlParams.delete("pn");
+    }
+    const newUrl = window.location.pathname + "?" + urlParams.toString();
+    window.history.replaceState(null, "", newUrl);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    updateUrl(newQuery);
+  };
   return (
     <section className="w-full min-h-dvh -mt-[var(--headerHeight,_100px)] relative max-w-screen overflow-clip flex flex-col bg-light">
       <div
@@ -182,132 +209,26 @@ const Banner = () => {
           <div className="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1 w-full max-w-xl shadow mx-auto mt-4">
             <input
               type="text"
-              placeholder="Enter parts number or name here.."
+              placeholder="Enter part number here.."
               className="flex-1 bg-transparent placeholder-gray-300 text-white px-4 py-2 rounded-full focus:outline-none"
+              value={query}
+              onChange={handleChange}
             />
             <Dialog>
               <DialogTrigger className="rounded-full bg-[#52bcd6] hover:bg-[#3f92a7] max-w-max px-6 py-2 mx-1 text-white font-medium shadow z-1 transition-colors cursor-pointer">
                 {data.searchBtnText}
               </DialogTrigger>
-              <DialogContent className="bg-white max-h-[80dvh] overflow-auto px-12 py-12">
+              <DialogContent className="bg-white max-h-[80dvh] overflow-auto px-6 lg:px-12 py-8 lg:py-12">
                 <DialogHeader>
-                  <DialogTitle>Request For Quote</DialogTitle>
+                  <DialogTitle>{data.dialogTitle}</DialogTitle>
                   <div>
                     <div className="mt-4 space-y-4">
-                      {/* <!-- Product info (static display) --> */}
-                      {/* <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          Product
-                        </label>
-                        <div className="p-2 bg-gray-100 border rounded text-sm text-gray-800">
-                          Product Name or SKU: <strong>ABC-1234</strong>
-                        </div>
-                      </div> */}
-
-                      {/* <!-- RFQ Form --> */}
-                      {/* <form
-                        action="/submit-rfq"
-                        method="POST"
-                        className="space-y-4"
-                      >
-                        <div>
-                          <label
-                            htmlFor="name"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Your Name
-                          </label>
-                          <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            required
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label
-                            htmlFor="email"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            required
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label
-                            htmlFor="company"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Company
-                          </label>
-                          <input
-                            type="text"
-                            id="company"
-                            name="company"
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label
-                            htmlFor="quantity"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Quantity Needed
-                          </label>
-                          <input
-                            type="number"
-                            id="quantity"
-                            name="quantity"
-                            min="1"
-                            required
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label
-                            htmlFor="message"
-                            className="block text-sm font-medium text-gray-700"
-                          >
-                            Additional Details
-                          </label>
-                          <textarea
-                            id="message"
-                            name="message"
-                            rows={3}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm"
-                          ></textarea>
-                        </div>
-
-                        <div className="pt-2">
-                          <button
-                            type="submit"
-                            className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition text-sm"
-                          >
-                            Submit RFQ
-                          </button>
-                        </div>
-                      </form> */}
                       <RFQForm />
                     </div>
                   </div>
                 </DialogHeader>
               </DialogContent>
             </Dialog>
-
-            {/* <button className="rounded-full bg-[#52bcd6] max-w-max px-6 py-2 mx-1 text-white font-medium shadow">
-              Search Now
-            </button> */}
           </div>
         </div>
         <img
