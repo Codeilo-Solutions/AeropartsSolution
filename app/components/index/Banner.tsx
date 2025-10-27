@@ -272,6 +272,7 @@ const Banner = () => {
         </div>
 
         <div className="planeWrapper w-full h-dvh mt-auto flex flex-col">
+          <div className="headerPlaceholder h-(--headerHeight)"></div>
           <div className="searchContainer w-screen relative text-center my-auto lg:mb-0 text-white flex flex-col gap-2 container mx-auto ">
             <h1 className="text-5xl md:text-7xl font-bold">{data.titleText}</h1>
             <p className="font-medium ">{data.description}</p>
@@ -301,21 +302,20 @@ const Banner = () => {
             </div>
           </div>
           <img
-            loading="lazy"
             src={planeImg}
-            className="w-[110%] object-scale-down"
+            className="w-[110%] object-scale-down max-lg:my-auto"
             ref={planeRef}
           />
         </div>
         <div
-          className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-60"
+          className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0"
           ref={cloudsRef}
         >
           <Slider companyLogos={companyLogos}></Slider>
 
           {cloudImges.map((img, index) => (
             <img
-              className="cloud pointer-events-none"
+              className="cloud pointer-events-none max-h-max opacity-40 lg:opacity-60"
               src={img}
               alt={`Company Logo ${index + 1}`}
               key={index}
