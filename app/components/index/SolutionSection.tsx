@@ -2,7 +2,7 @@ import icon1 from "~/../assets/images/SVGs/b2b.svg";
 import icon2 from "~/../assets/images/SVGs/b2c.svg";
 import icon3 from "~/../assets/images/SVGs/freight-solutions.svg";
 import arrowIcon from "~/../assets/images/SVGs/right-arrow.svg";
-import { FadeUp } from "~/components/ui/FadeUtil.client";
+import FadeUp from "~/components/ui/FadeUp.client";
 
 const SolutionSection = () => {
   const solutionData = [

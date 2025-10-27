@@ -1,5 +1,6 @@
 import mapImg from "../../../assets/images/map.png";
-import { FadeLeft, FadeRight } from "../ui/FadeUtil.client";
+import FadeLeft from "../ui/FadeLeft.client";
+import FadeRight from "../ui/FadeRight.client";
 
 const OurLocation = () => {
   const data = {

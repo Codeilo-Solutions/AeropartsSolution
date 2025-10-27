@@ -1,6 +1,6 @@
 import type { Route } from "./+types/About";
 import Banner from "~/components/Banner";
-import createDOMPurify from "isomorphic-dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import parse from "html-react-parser";
 import BannerImg from "~/../assets/images/aboutus-bg.jpg";
 
@@ -19,8 +19,10 @@ import company12Img from "~/../assets/images/company12.png";
 import company13Img from "~/../assets/images/company13.png";
 import company14Img from "~/../assets/images/company14.png";
 import Slider from "~/components/Slider.client";
-import { FadeLeft, FadeRight, FadeUp } from "~/components/ui/FadeUtil.client";
 import { Suspense } from "react";
+import FadeLeft from "~/components/ui/FadeLeft.client";
+import FadeRight from "~/components/ui/FadeRight.client";
+import FadeUp from "~/components/ui/FadeUp.client";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "About" }, { name: "description", content: "About Us" }];
@@ -83,9 +85,9 @@ export default function About() {
   } as const;
 
   // Use DOMPurify + html-react-parser to safely sanitize and parse HTML-like strings
-  const DOMPurify = createDOMPurify(
-    typeof window === "undefined" ? (globalThis as any).window : window
-  );
+  // const DOMPurify = createDOMPurify(
+  //   typeof window === "undefined" ? (globalThis as any).window : window
+  // );
   function safeParseHtml(html: string) {
     const clean = DOMPurify.sanitize(html, {
       ALLOWED_TAGS: ["strong", "span", "br", "em", "b", "i", "u", "a"],

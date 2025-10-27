@@ -12,14 +12,14 @@ type propType = {
   footerRef: React.RefObject<HTMLElement | null>;
   planeHolderRef: React.RefObject<HTMLDivElement | null>;
   mainContainerRef: React.RefObject<HTMLDivElement | null>;
-  pageLoaded: boolean; // ADDED
+  // pageLoaded: boolean; // ADDED
 };
 
 const Footer = ({
   footerRef,
   planeHolderRef,
   mainContainerRef,
-  pageLoaded,
+  // pageLoaded,
 }: propType) => {
   const location = useLocation();
 
@@ -29,6 +29,7 @@ const Footer = ({
     type: "success" | "error" | null;
     message: string;
   }>({ type: null, message: "" });
+  const [pageHeight, setPageHeight] = useState(0);
 
   const footerLocations = [
     "France: +33 (XXX) XXX XXXX",
@@ -110,6 +111,43 @@ const Footer = ({
     };
   }, [footerRef]);
 
+  useEffect(() => {
+    let lastHeight = document.documentElement.offsetHeight;
+    let intervalId: ReturnType<typeof setInterval>;
+    let hasDetectedChange = false;
+
+    const checkHeight = () => {
+      const currentHeight = document.documentElement.offsetHeight;
+      console.log("lastHeight", lastHeight);
+      console.log("currentHeight", currentHeight);
+      if (currentHeight !== lastHeight) {
+        console.log("Document offsetHeight changed:", currentHeight);
+        lastHeight = currentHeight;
+        setPageHeight(lastHeight); // trigger state change
+
+        if (!hasDetectedChange) {
+          hasDetectedChange = true;
+
+          // Clear the old 1-second interval
+          clearInterval(intervalId);
+
+          // Start a new 60-second interval
+          intervalId = setInterval(checkHeight, 60000);
+          console.log("Interval changed to 60 seconds");
+        }
+      }
+    };
+
+    // Initial check
+    checkHeight();
+
+    // Check every 1 second initially
+    intervalId = setInterval(checkHeight, 1000);
+
+    // Cleanup interval on unmount
+    return () => clearInterval(intervalId);
+  }, [setPageHeight]);
+
   useGSAP(
     () => {
       if (
@@ -162,7 +200,8 @@ const Footer = ({
         planeHolderRef.current,
         mainContainerRef.current,
         location.pathname,
-        pageLoaded, // ADDED pageLoaded to dependencies
+        // pageLoaded, // ADDED pageLoaded to dependencies
+        pageHeight,
       ],
       revertOnUpdate: true,
     }

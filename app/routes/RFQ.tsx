@@ -2,7 +2,8 @@ import type { Route } from "./+types/RFQ";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/rfq-bg.jpg";
 import RFQForm from "~/components/rfq/RFQForm";
-import { FadeRight, FadeUp } from "~/components/ui/FadeUtil.client";
+import FadeRight from "~/components/ui/FadeRight.client";
+import FadeUp from "~/components/ui/FadeUp.client";
 
 export function meta({}: Route.MetaArgs) {
   return [

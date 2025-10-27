@@ -5,7 +5,7 @@ import icon3 from "../../../assets/images/SVGs/engine-parts.svg";
 import icon4 from "../../../assets/images/SVGs/landing-gear.svg";
 import icon5 from "../../../assets/images/SVGs/cabin.svg";
 import icon6 from "../../../assets/images/SVGs/consumbles.svg";
-import { FadeUp } from "../ui/FadeUtil.client";
+import FadeUp from "../ui/FadeUp.client";
 
 const OurFeatures = () => {
   const data = {
@@ -50,39 +50,38 @@ const OurFeatures = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const delayTimer = 0.3;
   return (
-    <section className="imgSection bg-light w-screen py-41" ref={sectionRef}>
-      <FadeUp>
-        <div className="container mx-auto bg-transparent">
-          {/* <img src={section3Img} alt="" /> */}
-          <h1
-            className="underlineDecor text-4xl font-light text-primary"
-            style={{
-              "--height": "4px",
-              "--backgroundColor": "var(--color-primary)",
-              // "--bottom": "-0.25lh",
-            }}
-          >
-            {data.titleText}
-          </h1>
-          <h2 className="text-4xl font-bold mt-12">{data.subTitleText}</h2>
-          <p>{data.description}</p>
-        </div>
-      </FadeUp>
-      <div className="container mx-auto details grid lg:grid-cols-3 gap-10 mt-6">
-        {data.featuresData.map((data, index) => (
-          <FadeUp delay={delayTimer * (index + 1)}>
-            <div
-              key={data.title}
-              className="featureCard bg-light flex flex-col gap-4 px-12 py-8 hover:shadow-lg transition-all"
+    <>
+      <section className="imgSection bg-light w-screen py-41" ref={sectionRef}>
+        <FadeUp>
+          <div className="container mx-auto bg-transparent">
+            {/* <img src={section3Img} alt="" /> */}
+            <h1
+              className="underlineDecor text-4xl font-light text-primary"
+              style={{
+                "--height": "4px",
+                "--backgroundColor": "var(--color-primary)",
+                // "--bottom": "-0.25lh",
+              }}
             >
-              <img src={data.icon} alt="" height={60} width={60} />
-              <h2 className="text-2xl font-normal">{data.title}</h2>
-              <p className="text-sm font-normal">{data.desc}</p>
-            </div>
-          </FadeUp>
-        ))}
-      </div>
-    </section>
+              {data.titleText}
+            </h1>
+            <h2 className="text-4xl font-bold mt-12">{data.subTitleText}</h2>
+            <p>{data.description}</p>
+          </div>
+        </FadeUp>
+        <div className="container mx-auto details grid lg:grid-cols-3 gap-10 mt-6">
+          {data.featuresData.map((data, index) => (
+            <FadeUp delay={delayTimer * (index + 1)} key={data.title}>
+              <div className="featureCard bg-light flex flex-col gap-4 px-12 py-8 hover:shadow-lg transition-all">
+                <img src={data.icon} alt="" height={60} width={60} />
+                <h2 className="text-2xl font-normal">{data.title}</h2>
+                <p className="text-sm font-normal">{data.desc}</p>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </section>
+    </>
   );
 };
 
