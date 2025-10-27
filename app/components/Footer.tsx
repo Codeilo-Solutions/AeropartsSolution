@@ -296,9 +296,11 @@ const Footer = ({
               {footerLocations.map((location, index) => (
                 <li
                   key={location.label}
-                  className={`${index === 1 ? "max-lg:order-1" : null}`}
+                  className={`${index === 1 ? "max-lg:order-1" : null} hover:underline`}
                 >
-                  <a href={location.href}>{location.label}</a>
+                  <a href={location.href} className="contents">
+                    {location.label}
+                  </a>
                 </li>
               ))}
             </ul>
