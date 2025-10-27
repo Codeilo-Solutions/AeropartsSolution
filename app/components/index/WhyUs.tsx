@@ -1,6 +1,6 @@
 import propellerVid from "../../../assets/videos/propeller.mp4";
 import arrowIcon from "../../../assets/images/SVGs/right-arrow.svg";
-import { FadeUp } from "../ui/FadeUtil.client";
+import FadeUp from "../ui/FadeUp.client";
 import { Link } from "react-router";
 
 type data = {

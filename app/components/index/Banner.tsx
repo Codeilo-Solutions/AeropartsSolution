@@ -1,4 +1,13 @@
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import React, {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from "react";
+
+// import Slider from "../Slider.client";
 
 import skyBgImg from "../../../assets/images/Rectangle 1.png";
 import planeImg from "../../../assets/images/Plane.png";
@@ -8,20 +17,22 @@ import cloud2Img from "../../../assets/images/cloud2.png";
 import cloud3Img from "../../../assets/images/cloud3.png";
 import cloud4Img from "../../../assets/images/cloud4.png";
 import cloud5Img from "../../../assets/images/cloud5.png";
-import company1Img from "../../../assets/images/company1.png";
-import company2Img from "../../../assets/images/company2.png";
-import company3Img from "../../../assets/images/company3.png";
-import company4Img from "../../../assets/images/company4.png";
-import company5Img from "../../../assets/images/company5.png";
-import company6Img from "../../../assets/images/company6.png";
-import company7Img from "../../../assets/images/company7.png";
-import company8Img from "../../../assets/images/company8.png";
-import company9Img from "../../../assets/images/company9.png";
-import company10Img from "../../../assets/images/company10.png";
-import company11Img from "../../../assets/images/company11.png";
-import company12Img from "../../../assets/images/company12.png";
-import company13Img from "../../../assets/images/company13.png";
-import company14Img from "../../../assets/images/company14.png";
+// import company1Img from "../../../assets/images/company1.png";
+// import company2Img from "../../../assets/images/company2.png";
+// import company3Img from "../../../assets/images/company3.png";
+// import company4Img from "../../../assets/images/company4.png";
+// import company5Img from "../../../assets/images/company5.png";
+// import company6Img from "../../../assets/images/company6.png";
+// import company7Img from "../../../assets/images/company7.png";
+// import company8Img from "../../../assets/images/company8.png";
+// import company9Img from "../../../assets/images/company9.png";
+// import company10Img from "../../../assets/images/company10.png";
+// import company11Img from "../../../assets/images/company11.png";
+// import company12Img from "../../../assets/images/company12.png";
+// import company13Img from "../../../assets/images/company13.png";
+// import company14Img from "../../../assets/images/company14.png";
+import company1Img from "~/../assets/images/company1_new.png";
+import company2Img from "~/../assets/images/company2_new.png";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import {
@@ -33,10 +44,11 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import RFQForm from "../rfq/RFQForm";
-import Slider from "../Slider.client";
+// import Slider from "../Slider.client";
 // import { usePageLoader } from "~/hooks/usePageLoader";
 
 type data = {};
+const Slider = lazy(() => import("../Slider.client"));
 
 const Banner = () => {
   const data = {
@@ -53,18 +65,18 @@ const Banner = () => {
   const companyLogos = Object.values({
     company1Img,
     company2Img,
-    company3Img,
-    company4Img,
-    company5Img,
-    company6Img,
-    company7Img,
-    company8Img,
-    company9Img,
-    company10Img,
-    company11Img,
-    company12Img,
-    company13Img,
-    company14Img,
+    // company3Img,
+    // company4Img,
+    // company5Img,
+    // company6Img,
+    // company7Img,
+    // company8Img,
+    // company9Img,
+    // company10Img,
+    // company11Img,
+    // company12Img,
+    // company13Img,
+    // company14Img,
   });
   const cloudImges = Object.values({
     cloud1Img,
@@ -300,9 +312,10 @@ const Banner = () => {
           ref={cloudsRef}
         >
           <Slider companyLogos={companyLogos}></Slider>
+
           {cloudImges.map((img, index) => (
             <img
-              className="cloud"
+              className="cloud pointer-events-none"
               src={img}
               alt={`Company Logo ${index + 1}`}
               key={index}

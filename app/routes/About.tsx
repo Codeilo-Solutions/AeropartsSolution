@@ -1,25 +1,31 @@
 import type { Route } from "./+types/About";
 import Banner from "~/components/Banner";
-import createDOMPurify from "isomorphic-dompurify";
+import DOMPurify from "isomorphic-dompurify";
 import parse from "html-react-parser";
 import BannerImg from "~/../assets/images/aboutus-bg.jpg";
 
-import company1Img from "~/../assets/images/company1.png";
-import company2Img from "~/../assets/images/company2.png";
-import company3Img from "~/../assets/images/company3.png";
-import company4Img from "~/../assets/images/company4.png";
-import company5Img from "~/../assets/images/company5.png";
-import company6Img from "~/../assets/images/company6.png";
-import company7Img from "~/../assets/images/company7.png";
-import company8Img from "~/../assets/images/company8.png";
-import company9Img from "~/../assets/images/company9.png";
-import company10Img from "~/../assets/images/company10.png";
-import company11Img from "~/../assets/images/company11.png";
-import company12Img from "~/../assets/images/company12.png";
-import company13Img from "~/../assets/images/company13.png";
-import company14Img from "~/../assets/images/company14.png";
+// import company1Img from "~/../assets/images/company1.png";
+// import company2Img from "~/../assets/images/company2.png";
+// import company3Img from "~/../assets/images/company3.png";
+// import company4Img from "~/../assets/images/company4.png";
+// import company5Img from "~/../assets/images/company5.png";
+// import company6Img from "~/../assets/images/company6.png";
+// import company7Img from "~/../assets/images/company7.png";
+// import company8Img from "~/../assets/images/company8.png";
+// import company9Img from "~/../assets/images/company9.png";
+// import company10Img from "~/../assets/images/company10.png";
+// import company11Img from "~/../assets/images/company11.png";
+// import company12Img from "~/../assets/images/company12.png";
+// import company13Img from "~/../assets/images/company13.png";
+// import company14Img from "~/../assets/images/company14.png";
+import company1Img from "~/../assets/images/company1_new.png";
+import company2Img from "~/../assets/images/company2_new.png";
+
 import Slider from "~/components/Slider.client";
-import { FadeLeft, FadeRight, FadeUp } from "~/components/ui/FadeUtil.client";
+import { Suspense } from "react";
+import FadeLeft from "~/components/ui/FadeLeft.client";
+import FadeRight from "~/components/ui/FadeRight.client";
+import FadeUp from "~/components/ui/FadeUp.client";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "About" }, { name: "description", content: "About Us" }];
@@ -29,18 +35,18 @@ export default function About() {
   const companyLogos = Object.values({
     company1Img,
     company2Img,
-    company3Img,
-    company4Img,
-    company5Img,
-    company6Img,
-    company7Img,
-    company8Img,
-    company9Img,
-    company10Img,
-    company11Img,
-    company12Img,
-    company13Img,
-    company14Img,
+    // company3Img,
+    // company4Img,
+    // company5Img,
+    // company6Img,
+    // company7Img,
+    // company8Img,
+    // company9Img,
+    // company10Img,
+    // company11Img,
+    // company12Img,
+    // company13Img,
+    // company14Img,
   });
 
   const data = {
@@ -82,9 +88,9 @@ export default function About() {
   } as const;
 
   // Use DOMPurify + html-react-parser to safely sanitize and parse HTML-like strings
-  const DOMPurify = createDOMPurify(
-    typeof window === "undefined" ? (globalThis as any).window : window
-  );
+  // const DOMPurify = createDOMPurify(
+  //   typeof window === "undefined" ? (globalThis as any).window : window
+  // );
   function safeParseHtml(html: string) {
     const clean = DOMPurify.sanitize(html, {
       ALLOWED_TAGS: ["strong", "span", "br", "em", "b", "i", "u", "a"],
@@ -165,7 +171,10 @@ export default function About() {
         </div>
       </section>
       <section className="bg-white text-center pb-20">
-        <Slider companyLogos={companyLogos}></Slider>
+        <Suspense fallback={null}>
+          {/* RE-ADDED Suspense wrapper */}
+          <Slider companyLogos={companyLogos}></Slider>
+        </Suspense>
       </section>
     </>
   );

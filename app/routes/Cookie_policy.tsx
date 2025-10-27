@@ -2,7 +2,7 @@ import type { Route } from "./+types/Cookie_policy";
 import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/policies-bg.jpg";
 import parse from "html-react-parser";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 export function meta({}: Route.MetaArgs) {
   return [

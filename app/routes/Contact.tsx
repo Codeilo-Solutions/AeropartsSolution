@@ -3,9 +3,10 @@ import Banner from "~/components/Banner";
 import BannerImg from "~/../assets/images/contact-bg.jpg";
 import ContactForm from "~/components/contact/ContactForm";
 import favIcon from "~/../assets/images/aero-icon.svg";
-import { FadeLeft, FadeRight } from "~/components/ui/FadeUtil.client";
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
+import FadeLeft from "~/components/ui/FadeLeft.client";
+import FadeRight from "~/components/ui/FadeRight.client";
 
 export function meta({}: Route.MetaArgs) {
   return [

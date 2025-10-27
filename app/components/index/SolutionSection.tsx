@@ -2,7 +2,7 @@ import icon1 from "~/../assets/images/SVGs/b2b.svg";
 import icon2 from "~/../assets/images/SVGs/b2c.svg";
 import icon3 from "~/../assets/images/SVGs/freight-solutions.svg";
 import arrowIcon from "~/../assets/images/SVGs/right-arrow.svg";
-import { FadeUp } from "~/components/ui/FadeUtil.client";
+import FadeUp from "~/components/ui/FadeUp.client";
 
 const SolutionSection = () => {
   const solutionData = [
@@ -22,7 +22,7 @@ const SolutionSection = () => {
       icon: icon3,
       title: "Freight Solutions",
       desc: "Our in-house freight division provides end-to-end logistics for aviation parts and equipment.",
-      redirectUrl: "#",
+      redirectUrl: "https://bflexee.ae/",
     },
   ];
   return (
@@ -39,7 +39,11 @@ const SolutionSection = () => {
                 <img src={data.icon} alt="" height={42} width={42} />
                 <h1 className="text-2xl font-normal">{data.title}</h1>
                 <p className="text-sm font-normal">{data.desc}</p>
-                <a className="contents" href={data.redirectUrl}>
+                <a
+                  className={`contents ${data.redirectUrl === "#" ? "invisible pointer-events-none" : null} `}
+                  href={data.redirectUrl}
+                  target="_blank"
+                >
                   <img
                     src={arrowIcon}
                     width={32}
