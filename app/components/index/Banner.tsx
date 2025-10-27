@@ -1,4 +1,12 @@
-import { useEffect, useRef, useState, type ChangeEvent } from "react";
+import React, {
+  Suspense,
+  lazy,
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+} from "react";
+import Loader from "~/components/ui/Loader";
 
 import skyBgImg from "../../../assets/images/Rectangle 1.png";
 import planeImg from "../../../assets/images/Plane.png";
@@ -33,12 +41,13 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import RFQForm from "../rfq/RFQForm";
-import Slider from "../Slider.client";
+// import Slider from "../Slider.client";
 // import { usePageLoader } from "~/hooks/usePageLoader";
 
 type data = {};
 
 const Banner = () => {
+  const Slider = lazy(() => import("../Slider.client"));
   const data = {
     titleText: "Trusted parts for global skies.",
     description:
@@ -299,7 +308,11 @@ const Banner = () => {
           className="cloudWrapper w-full h-auto min-h-[max(30vh,_10rem)] mt-auto absolute bottom-0 left-0 opacity-60"
           ref={cloudsRef}
         >
-          <Slider companyLogos={companyLogos}></Slider>
+          <Suspense fallback={null}>
+            {/* RE-ADDED Suspense wrapper */}
+            <Slider companyLogos={companyLogos}></Slider>
+          </Suspense>
+
           {cloudImges.map((img, index) => (
             <img
               className="cloud"

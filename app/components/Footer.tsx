@@ -6,16 +6,21 @@ import Socials from "./Socials";
 import { Link, useLocation } from "react-router";
 
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 type propType = {
   footerRef: React.RefObject<HTMLElement | null>;
   planeHolderRef: React.RefObject<HTMLDivElement | null>;
   mainContainerRef: React.RefObject<HTMLDivElement | null>;
+  pageLoaded: boolean; // ADDED
 };
 
-const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
+const Footer = ({
+  footerRef,
+  planeHolderRef,
+  mainContainerRef,
+  pageLoaded,
+}: propType) => {
   const location = useLocation();
 
   const [email, setEmail] = useState("");
@@ -157,20 +162,11 @@ const Footer = ({ footerRef, planeHolderRef, mainContainerRef }: propType) => {
         planeHolderRef.current,
         mainContainerRef.current,
         location.pathname,
+        pageLoaded, // ADDED pageLoaded to dependencies
       ],
       revertOnUpdate: true,
     }
   );
-
-  useEffect(() => {
-    // Small delay to ensure DOM has updated and images have loaded
-    const timeoutId = setTimeout(() => {
-      ScrollTrigger.refresh();
-      console.log("ScrollTrigger refreshed after route change");
-    }, 100);
-
-    return () => clearTimeout(timeoutId);
-  }, [location.pathname]);
 
   return (
     <footer

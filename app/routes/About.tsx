@@ -20,6 +20,7 @@ import company13Img from "~/../assets/images/company13.png";
 import company14Img from "~/../assets/images/company14.png";
 import Slider from "~/components/Slider.client";
 import { FadeLeft, FadeRight, FadeUp } from "~/components/ui/FadeUtil.client";
+import { Suspense } from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [{ title: "About" }, { name: "description", content: "About Us" }];
@@ -165,7 +166,10 @@ export default function About() {
         </div>
       </section>
       <section className="bg-white text-center pb-20">
-        <Slider companyLogos={companyLogos}></Slider>
+        <Suspense fallback={null}>
+          {/* RE-ADDED Suspense wrapper */}
+          <Slider companyLogos={companyLogos}></Slider>
+        </Suspense>
       </section>
     </>
   );

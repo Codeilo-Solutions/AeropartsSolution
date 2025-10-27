@@ -9,12 +9,13 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import { Suspense, useEffect, useRef } from "react";
+// import Header from "./components/Header";
+// import Footer from "./components/Footer";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import Loader from "~/components/ui/Loader";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import { usePageLoader } from "./hooks/usePageLoader";
+import { useDocumentHeightObserver } from "./hooks/useDocumentHeightObserver";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -35,17 +36,29 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const Header = lazy(() => import("./components/Header"));
+  const Footer = lazy(() => import("./components/Footer"));
   const mainRef = useRef<HTMLDivElement | null>(null);
   const planeHolderRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
+
+  const [pageLoaded, setPageLoaded] = useState(false);
+
   useEffect(() => {
     // guard for SSR
     if (typeof window === "undefined" || !mainRef.current) return;
     gsap.registerPlugin(ScrollTrigger);
+    console.log("effect ran");
+
+    // Set pageLoaded to true after a short delay to ensure initial content is rendered
+    const timeoutId = setTimeout(() => {
+      setPageLoaded(true);
+    }, 30000); // Adjust delay as needed
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
-  // const { isLoading, isContentReady, signalReady } = usePageLoader();
+  useDocumentHeightObserver();
 
   return (
     <html lang="en">
@@ -56,7 +69,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loader />}>
           <Header />
           <div className="mainContent curtainWrapper" ref={mainRef}>
             {children}
@@ -64,6 +77,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               mainContainerRef={mainRef}
               footerRef={footerRef}
               planeHolderRef={planeHolderRef}
+              pageLoaded={pageLoaded}
             />
           </div>
           <ScrollRestoration />
