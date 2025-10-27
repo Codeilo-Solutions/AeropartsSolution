@@ -20,11 +20,20 @@ const Slider = ({ companyLogos }: { companyLogos: string[] }) => {
       }}
       extensions={{ AutoScroll }}
     >
-      {companyLogos.map((logo, index) => (
-        <SplideSlide key={logo + index} className="logoSlide">
-          <img src={logo} alt={`Company Logo ${index + 1}`} />
-        </SplideSlide>
-      ))}
+      {Array.from({ length: 7 }).map((_, outerIndex) =>
+        companyLogos.map((logo, innerIndex) => (
+          <SplideSlide
+            key={`${logo}-${outerIndex}-${innerIndex}`}
+            className="logoSlide"
+          >
+            <img
+              src={logo}
+              alt={`Company Logo ${innerIndex + 1}`}
+              className="h-8 w-auto not-hover:grayscale transition-all"
+            />
+          </SplideSlide>
+        ))
+      )}
     </Splide>
   );
 };

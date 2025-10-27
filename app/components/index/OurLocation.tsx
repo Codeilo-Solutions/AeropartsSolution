@@ -1,4 +1,4 @@
-import mapImg from "../../../assets/images/map.png";
+import mapImg from "../../../assets/images/new-map.png";
 import FadeLeft from "../ui/FadeLeft.client";
 import FadeRight from "../ui/FadeRight.client";
 

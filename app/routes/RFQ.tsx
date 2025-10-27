@@ -23,12 +23,6 @@ const RFQ = () => {
     email: "contact@aeropartssolution.com",
   };
 
-  const dynamicContent = {
-    title: "Dynamic Title",
-    description:
-      "This is a dynamic description that can change based on user input or other factors.",
-  };
-
   return (
     <>
       <Banner
@@ -42,14 +36,17 @@ const RFQ = () => {
           <FadeRight>
             <div className="formDetails bg-grey text-[#494949] lg:w-[85%] max-h-max p-20 pr-24 pl-0 rounded-r-[30px] relative after:content-[''] after:absolute after:w-full after:h-full after:top-0 after:left-1 after:-z-1 after:bg-grey after:-translate-x-full">
               <h1 className="text-primary font-black text-5xl">
-                {dynamicContent.title}
+                {contactInfo.title}
               </h1>
               <p className="grid gap-6 mt-12">
-                <span>{dynamicContent.description}</span>
                 <span>{contactInfo.description}</span>
                 <span className="font-bold">{contactInfo.company}</span>
                 <span className="max-w-[35ch]">{contactInfo.address}</span>
-                <span>{contactInfo.phone.join(" < br /> ")}</span>
+                <span className="grid">
+                  {contactInfo.phone.map((phone) => (
+                    <span>{phone}</span>
+                  ))}
+                </span>
                 <span>{contactInfo.email}</span>
               </p>
             </div>

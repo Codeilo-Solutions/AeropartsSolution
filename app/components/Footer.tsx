@@ -30,12 +30,23 @@ const Footer = ({
     message: string;
   }>({ type: null, message: "" });
   const [pageHeight, setPageHeight] = useState(0);
-
   const footerLocations = [
-    "France: +33 (XXX) XXX XXXX",
-    "KSA: +966 (XXX) XXX XXXX",
-    "UAE: +971 6 526 3464",
-    "Tunis: +71 (XXX) XXX XXXX",
+    {
+      label: "+971 50 219 3737",
+      href: "tel:+971502193737",
+    },
+    {
+      label: "contact@aeropartssolution.com",
+      href: "mailto:contact@aeropartssolution.com",
+    },
+    {
+      label: "+971 50 536 3659",
+      href: "tel:+971505363659",
+    },
+    {
+      label: "a.bacha@aeropartssolution.com",
+      href: "mailto:a.bacha@aeropartssolution.com",
+    },
   ];
 
   const footerLinks = [
@@ -268,7 +279,9 @@ const Footer = ({
             <h2 className="text-lg text-secondary">AOG Desk:</h2>
             <ul className=" lg:grid lg:grid-cols-2 gap-x-8 gap-y-3 mt-4 text-xs">
               {footerLocations.map((location) => (
-                <li key={location}>{location}</li>
+                <li key={location.label}>
+                  <a href={location.href}>{location.label}</a>
+                </li>
               ))}
             </ul>
           </div>
