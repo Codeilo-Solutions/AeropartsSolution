@@ -1,12 +1,13 @@
 import footerLogoImg from "../../assets/images/FooterLogo.png";
 import footerPlaneImg from "../../assets/images/sections/plane-transparent.png";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Socials from "./Socials";
 
 import { Link, useLocation } from "react-router";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 type propType = {
   footerRef: React.RefObject<HTMLElement | null>;
@@ -32,20 +33,20 @@ const Footer = ({
   const [pageHeight, setPageHeight] = useState(0);
   const footerLocations = [
     {
-      label: "+971 50 219 3737",
-      href: "tel:+971502193737",
-    },
-    {
       label: "contact@aeropartssolution.com",
       href: "mailto:contact@aeropartssolution.com",
     },
     {
-      label: "+971 50 536 3659",
-      href: "tel:+971505363659",
+      label: "+971 50 219 3737",
+      href: "tel:+971502193737",
     },
     {
       label: "a.bacha@aeropartssolution.com",
       href: "mailto:a.bacha@aeropartssolution.com",
+    },
+    {
+      label: "+971 50 536 3659",
+      href: "tel:+971505363659",
     },
   ];
 
@@ -143,8 +144,8 @@ const Footer = ({
           clearInterval(intervalId);
 
           // Start a new 60-second interval
-          intervalId = setInterval(checkHeight, 60000);
-          console.log("Interval changed to 60 seconds");
+          intervalId = setInterval(checkHeight, 5000);
+          console.log("Interval changed to 5 seconds");
         }
       }
     };
@@ -158,6 +159,12 @@ const Footer = ({
     // Cleanup interval on unmount
     return () => clearInterval(intervalId);
   }, [setPageHeight]);
+
+  // useEffect(() => {
+  //   // guard for SSR
+  //   if (typeof window === "undefined") return;
+  //   gsap.registerPlugin(ScrollTrigger);
+  // }, []);
 
   useGSAP(
     () => {
@@ -218,6 +225,14 @@ const Footer = ({
     }
   );
 
+  useLayoutEffect(() => {
+    // guard for SSR
+    if (typeof window === "undefined") return;
+    if (!(ScrollTrigger as any).version) {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+  }, []);
+
   return (
     <footer
       className="imgSection bg-[#0a0a0a] w-screen pt-21 pb-4 lg:sticky lg:bottom-0"
@@ -277,9 +292,12 @@ const Footer = ({
         <div className="footerLinks flex gap-x-24 gap-y-4 flex-wrap">
           <div className="footerLinkSection">
             <h2 className="text-lg text-secondary">AOG Desk:</h2>
-            <ul className=" lg:grid lg:grid-cols-2 gap-x-8 gap-y-3 mt-4 text-xs">
-              {footerLocations.map((location) => (
-                <li key={location.label}>
+            <ul className="grid lg:grid-cols-2 gap-x-8 gap-y-1 lg:gap-y-3 mt-4 text-xs">
+              {footerLocations.map((location, index) => (
+                <li
+                  key={location.label}
+                  className={`${index === 1 ? "max-lg:order-1" : null}`}
+                >
                   <a href={location.href}>{location.label}</a>
                 </li>
               ))}

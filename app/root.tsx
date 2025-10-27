@@ -11,7 +11,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Loader from "~/components/ui/Loader";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -43,6 +43,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const planeHolderRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    // guard for SSR
+    if (typeof window === "undefined" || !mainRef.current) return;
+    gsap.registerPlugin(ScrollTrigger);
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -52,19 +58,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {/* <Suspense fallback={<Loader />}> */}
-        <Header />
-        <div className="mainContent curtainWrapper" ref={mainRef}>
-          {children}
-          <Footer
-            mainContainerRef={mainRef}
-            footerRef={footerRef}
-            planeHolderRef={planeHolderRef}
-          />
-        </div>
-        <ScrollRestoration />
-        <Scripts />
-        {/* </Suspense> */}
+        <Suspense fallback={<Loader />}>
+          <Header />
+          <div className="mainContent curtainWrapper" ref={mainRef}>
+            {children}
+            <Footer
+              mainContainerRef={mainRef}
+              footerRef={footerRef}
+              planeHolderRef={planeHolderRef}
+            />
+          </div>
+          <ScrollRestoration />
+          <Scripts />
+        </Suspense>
         {/* {isLoading && (
           <div className="loaderContainer fixed inset-0 z-[500] bg-black grid place-content-center">
             <div className="loader z-20"></div>
