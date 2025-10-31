@@ -2,29 +2,43 @@ import propellerVid from "../../../assets/videos/propeller.mp4";
 import arrowIcon from "../../../assets/images/SVGs/right-arrow.svg";
 import FadeUp from "../ui/FadeUp.client";
 import { Link } from "react-router";
+import type { IndexSection2Content } from "~/routes/_index";
 
 type data = {
   videoSource: string;
   titleText: string;
   description: string;
-  listText: string[];
+  listText: IndexSection2Content[];
   learnMoreText: string;
   LearnMoreIcon: string;
   LearnMoreHref: string;
 };
 
-const WhyUs = () => {
+const WhyUs = ({
+  title,
+  desc,
+  content,
+  btnLink,
+  btnTxt,
+}: {
+  title: string;
+  desc: string;
+  content: IndexSection2Content[];
+  btnLink: string;
+  btnTxt: string;
+}) => {
   const delayTimer = 0.3;
   const data: data = {
     videoSource: propellerVid,
-    titleText: "Why Choose Us?",
+    titleText: title ?? "Why Choose Us?",
     description:
+      desc ??
       "We provide premium aircraft parts, private jet solutions, and end-to-end freight services to keep your operations flying smoothly.",
-    listText: [
-      "Decades of aviation expertise",
-      "Certified & trusted suppliers",
-      "Global reach with personalized service",
-      "B2B, B2C, and freight solutions under one roof",
+    listText: content ?? [
+      { list: "Decades of aviation expertise" },
+      { list: "Certified & trusted suppliers" },
+      { list: "Global reach with personalized service" },
+      { list: "B2B, B2C, and freight solutions under one roof" },
     ],
     learnMoreText: "Learn More",
     LearnMoreIcon: arrowIcon,
@@ -61,7 +75,7 @@ const WhyUs = () => {
           <FadeUp delay={delayTimer * 2}>
             <ul className=" list-disc ml-4 my-12 lg:mt-11 lg:mb-18">
               {data.listText.map((text, index) => (
-                <li key={index}>{text}</li>
+                <li key={index}>{text.list}</li>
               ))}
             </ul>
           </FadeUp>

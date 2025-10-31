@@ -6,43 +6,59 @@ import icon4 from "../../../assets/images/SVGs/landing-gear.svg";
 import icon5 from "../../../assets/images/SVGs/cabin.svg";
 import icon6 from "../../../assets/images/SVGs/consumbles.svg";
 import FadeUp from "../ui/FadeUp.client";
+import type { IndexSection3Content } from "~/routes/_index";
 
-const OurFeatures = () => {
+const OurFeatures = ({
+  title,
+  desc,
+  content,
+}: {
+  title: string;
+  desc: string;
+  content: IndexSection3Content[];
+}) => {
   const data = {
-    titleText: "Our Features",
-    subTitleText: "Reliable and Fast Delivery of Certified Aircraft Parts",
+    titleText: title ?? "Our Features",
+    subTitleText:
+      desc ?? "Reliable and Fast Delivery of Certified Aircraft Parts",
     description:
       "Aeroparts Solutions provides a wide range of certified aircraft parts and aviation components, with fast and efficient delivery from our Dubai hub to anywhere in the world.",
-    featuresData: [
+    featuresData: content ?? [
       {
-        icon: icon1,
+        image: icon1,
         title: "Airframe Components",
-        desc: "Structural parts, doors, panels, control surfaces ; all certified and traceable.",
+        description:
+          "Structural parts, doors, panels, control surfaces ; all certified and traceable.",
       },
       {
-        icon: icon2,
+        image: icon2,
         title: "Avionics & Instruments",
-        desc: "Navigation systems, communication equipment, cockpit displays, and electronic modules.",
+        description:
+          "Navigation systems, communication equipment, cockpit displays, and electronic modules.",
       },
       {
-        icon: icon3,
+        image: icon3,
         title: "Engine Parts & Accessories",
-        desc: "Turbine engine components, APUs, nacelles, and associated accessories.",
+        description:
+          "Turbine engine components, APUs, nacelles, and associated accessories.",
       },
       {
-        icon: icon4,
+        image: icon4,
         title: "Landing Gear Systems",
-        desc: "Main and nose landing gear, brakes, wheels, actuators, and hydraulics.",
+        description:
+          "Main and nose landing gear, brakes, wheels, actuators, and hydraulics.",
       },
       {
-        icon: icon5,
+        image: icon5,
         title: "Cabin & Interior Equipment",
-        desc: "Seats, overhead bins, lighting systems, lavatories, galleys, and safety equipment.",
+        description:
+          "Seats, overhead bins, lighting systems, lavatories, galleys, and safety equipment.",
       },
       {
-        icon: icon6,
+        image: icon6,
         title: "Consumables & Rotables",
-        desc: "Filters, seals, bearings, and other regularly replaced items with certification.",
+        description:
+          "Filters, seals, bearings, and other regularly replaced items with certification.",
       },
     ],
   };
@@ -73,9 +89,14 @@ const OurFeatures = () => {
           {data.featuresData.map((data, index) => (
             <FadeUp delay={delayTimer * (index + 1)} key={data.title}>
               <div className="featureCard bg-light flex flex-col gap-4 px-12 py-8 hover:shadow-lg transition-all">
-                <img src={data.icon} alt="" height={60} width={60} />
+                <img
+                  src={typeof data.image === "string" ? data.image : ""}
+                  alt=""
+                  height={60}
+                  width={60}
+                />
                 <h2 className="text-2xl font-normal">{data.title}</h2>
-                <p className="text-sm font-normal">{data.desc}</p>
+                <p className="text-sm font-normal">{data.description}</p>
               </div>
             </FadeUp>
           ))}

@@ -43,7 +43,7 @@ export default function ContactForm() {
       formData.append("message", data.message || "");
 
       const response = await fetch(
-        `https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/contact-form/`,
+        `${import.meta.env.Backend_Base_Url}/contact-form/`,
         {
           method: "POST",
           body: formData,

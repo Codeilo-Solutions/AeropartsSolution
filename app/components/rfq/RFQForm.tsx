@@ -95,8 +95,8 @@ export default function RFQForm(formClass: { formClass?: string }) {
       }
 
       const response = await fetch(
-        // `${import.meta.env.Backend_Base_Url}/contact-form-rfq/`,
-        `https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/contact-form-rfq/`,
+        `${import.meta.env.Backend_Base_Url}/contact-form-rfq/`,
+        // `https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/contact-form-rfq/`,
         {
           method: "POST",
           body: formData,

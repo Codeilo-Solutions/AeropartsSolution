@@ -44,16 +44,21 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import RFQForm from "../rfq/RFQForm";
-// import Slider from "../Slider.client";
-// import { usePageLoader } from "~/hooks/usePageLoader";
 
 type data = {};
 const Slider = lazy(() => import("../Slider.client"));
 
-const Banner = () => {
+const Banner = ({
+  bannerTitle,
+  bannerSubtitle,
+}: {
+  bannerTitle: string;
+  bannerSubtitle: string;
+}) => {
   const data = {
-    titleText: "Trusted parts for global skies.",
+    titleText: bannerTitle ?? "Trusted parts for global skies.",
     description:
+      bannerSubtitle ??
       "Supplying premium aircraft components for private and commercial fleets worldwide.",
     searchBtnText: "Search Now",
     dialogTitle: "Request For Quote",

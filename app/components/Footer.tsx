@@ -71,7 +71,7 @@ const Footer = ({
       formData.append("email", email);
 
       const response = await fetch(
-        `https://thisisdemo.com/aeroparts/dev/wp-json/my-api/v2/mailchimp/`,
+        `${import.meta.env.Backend_Base_Url}/mailchimp`,
         {
           method: "POST",
           body: formData,
