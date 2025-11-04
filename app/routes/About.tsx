@@ -1,5 +1,6 @@
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import BannerImg from "~/../assets/images/aboutus-bg.jpg";
 import Banner from "~/components/Banner";
@@ -131,6 +132,30 @@ export default function About() {
   // const DOMPurify = createDOMPurify(
   //   typeof window === "undefined" ? (globalThis as any).window : window
   // );
+    const [partnerLogos, setPartnerLogos] = useState<string[]>([]);
+
+useEffect(() => {
+  let mounted = true;
+  async function fetchPartnerLogos() {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_Backend_Base_Url}/partner-logo/`, {
+        method: "GET",
+        credentials: "same-origin",
+      });
+      if (!res.ok) throw new Error(`Failed to fetch partner logos: ${res.status}`);
+      const data = await res.json();
+
+      if (mounted && Array.isArray(data.partner_logo)) {
+        setPartnerLogos(data.partner_logo.map((item: any) => item.logos).filter(Boolean));
+      }
+    } catch (err) {
+      console.error("Error fetching partner logos:", err);
+    }
+  }
+
+  fetchPartnerLogos();
+  return () => { mounted = false; };
+}, []);
   function safeParseHtml(html: string) {
     const clean = DOMPurify.sanitize(html, {
       ALLOWED_TAGS: ["strong", "span", "br", "em", "b", "i", "u", "a"],
@@ -254,7 +279,7 @@ const data = useLoaderData<AboutLoaderResponse>();
       <section className="bg-white text-center pb-20">
         <Suspense fallback={null}>
           {/* RE-ADDED Suspense wrapper */}
-          <Slider companyLogos={companyLogos}></Slider>
+          <Slider companyLogos={partnerLogos}></Slider>
         </Suspense>
       </section>
     </>

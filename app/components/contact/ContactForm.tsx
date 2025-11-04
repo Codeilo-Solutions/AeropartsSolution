@@ -43,7 +43,7 @@ export default function ContactForm() {
       formData.append("message", data.message || "");
 
       const response = await fetch(
-        `${import.meta.env.Backend_Base_Url}/contact-form/`,
+        `${import.meta.env.VITE_Backend_Base_Url}/contact-form/`,
         {
           method: "POST",
           body: formData,
