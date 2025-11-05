@@ -33,7 +33,7 @@ export async function clientLoader(): Promise<TermsLoaderResponse> {
     if (!termsData || typeof termsData.banner_title !== "string") {
       throw new Response("Invalid index payload", { status: 502 });
     }
-    console.log("About Loader Data:", termsData);
+    // console.log("About Loader Data:", termsData);
     return termsData;
   }
   catch (err) {

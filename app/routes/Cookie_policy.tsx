@@ -33,7 +33,7 @@ export async function clientLoader(): Promise<CookieLoaderResponse> {
     if (!cookieData || typeof cookieData.banner_title !== "string") {
       throw new Response("Invalid index payload", { status: 502 });
     }
-    console.log("About Loader Data:", cookieData);
+    // console.log("About Loader Data:", cookieData);
     return cookieData;
   }
   catch (err) {

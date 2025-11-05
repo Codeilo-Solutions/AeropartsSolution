@@ -26,7 +26,7 @@ const Menu = () => {
         const data = await res.json();
         setSocialLinks(data.footer.social);
       } catch (err) {
-        console.error("Error fetching social links:", err);
+        // console.error("Error fetching social links:", err);
       }
     }
     fetchSocials();

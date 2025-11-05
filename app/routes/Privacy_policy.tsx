@@ -32,7 +32,7 @@ export async function clientLoader(): Promise<PrivacyLoaderResponse> {
     if (!PrivacyData || typeof PrivacyData.banner_title !== "string") {
       throw new Response("Invalid index payload", { status: 502 });
     }
-    console.log("About Loader Data:", PrivacyData);
+    // console.log("About Loader Data:", PrivacyData);
     return PrivacyData;
   }
   catch (err) {

@@ -107,7 +107,7 @@ useEffect(() => {
         setPartnerLogos(data.partner_logo.map((item: any) => item.logos).filter(Boolean));
       }
     } catch (err) {
-      console.error("Error fetching partner logos:", err);
+      // console.error("Error fetching partner logos:", err);
     }
   }
 
@@ -211,7 +211,7 @@ useEffect(() => {
       // if (!isContentReady) return;
 
       if (bgCloudsRef.current) {
-        console.log("GSAP bgCloud Init");
+        // console.log("GSAP bgCloud Init");
         gsap.to("img", {
           xPercent: 100,
           repeat: -1,

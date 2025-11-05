@@ -55,7 +55,7 @@ const Header = () => {
         // Expecting response shape: { header: { logo: "https://..." } }
         if (data?.header?.logo) setHeaderLogo(data.header.logo);
       } catch (err) {
-        console.error("Error fetching header logo:", err);
+        // console.error("Error fetching header logo:", err);
       }
     }
     fetchHeaderLogo();

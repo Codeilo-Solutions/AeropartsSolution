@@ -62,7 +62,7 @@ export async function clientLoader(): Promise<AboutLoaderResponse> {
     if (!data || typeof data.banner_title !== "string") {
       throw new Response("Invalid index payload", { status: 502 });
     }
-    console.log("About Loader Data:", data);
+    // console.log("About Loader Data:", data);
     return data;
   }
   catch (err) {
@@ -149,7 +149,7 @@ useEffect(() => {
         setPartnerLogos(data.partner_logo.map((item: any) => item.logos).filter(Boolean));
       }
     } catch (err) {
-      console.error("Error fetching partner logos:", err);
+      // console.error("Error fetching partner logos:", err);
     }
   }
 

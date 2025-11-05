@@ -76,7 +76,7 @@ const [contacts, setContacts] = useState<{ email: string; phone: string }[]>([])
       }
 
       const result = await response.json();
-      console.log(result);
+      // console.log(result);
       setSubmitStatus({
         type: "success",
         message: "Successfully subscribed!",
@@ -85,7 +85,7 @@ const [contacts, setContacts] = useState<{ email: string; phone: string }[]>([])
       // Reset email after success
       setEmail("");
     } catch (error) {
-      console.error("Submission error:", error);
+      // console.error("Submission error:", error);
       setSubmitStatus({
         type: "error",
         message: "Failed to subscribe. Please try again.",
@@ -129,7 +129,7 @@ useEffect(() => {
       setSocialLinks(data.footer.social);
       setContacts(data.footer.contact_no);
     } catch (err) {
-      console.error("Error fetching footer data:", err);
+      // console.error("Error fetching footer data:", err);
     }
   }
 
@@ -143,10 +143,10 @@ useEffect(() => {
 
     const checkHeight = () => {
       const currentHeight = document.documentElement.offsetHeight;
-      console.log("lastHeight", lastHeight);
-      console.log("currentHeight", currentHeight);
+      // console.log("lastHeight", lastHeight);
+      // console.log("currentHeight", currentHeight);
       if (currentHeight !== lastHeight) {
-        console.log("Document offsetHeight changed:", currentHeight);
+        // console.log("Document offsetHeight changed:", currentHeight);
         lastHeight = currentHeight;
         setPageHeight(lastHeight); // trigger state change
 
@@ -158,7 +158,7 @@ useEffect(() => {
 
           // Start a new 60-second interval
           intervalId = setInterval(checkHeight, 5000);
-          console.log("Interval changed to 5 seconds");
+          // console.log("Interval changed to 5 seconds");
         }
       }
     };
@@ -188,7 +188,7 @@ useEffect(() => {
       )
         return;
 
-      console.log("GSAP Footer Animation Init");
+      // console.log("GSAP Footer Animation Init");
 
       const footerHeight = footerRef.current?.getBoundingClientRect().height;
       const mainContainerHeight =
@@ -209,7 +209,7 @@ useEffect(() => {
           markers: false,
           onUpdate: (self) => {
             // Optional: log progress for debugging
-            console.log("Footer animation progress:", self.progress);
+            // console.log("Footer animation progress:", self.progress);
           },
           // markers: true,       // Uncomment for debugging
         },

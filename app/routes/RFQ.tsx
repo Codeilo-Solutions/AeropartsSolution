@@ -36,7 +36,7 @@ export async function clientLoader(): Promise<RfqLoaderResponse> {
     if (!contactInfo || typeof contactInfo.banner_title !== "string") {
       throw new Response("Invalid index payload", { status: 502 });
     }
-    console.log("About Loader Data:", contactInfo);
+    // console.log("About Loader Data:", contactInfo);
     return contactInfo;
   }
   catch (err) {

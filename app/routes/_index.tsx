@@ -105,7 +105,7 @@ export async function clientLoader(): Promise<IndexLoaderResponse> {
     if (!data || typeof data.banner_title !== "string") {
       throw new Response("Invalid index payload", { status: 502 });
     }
-    console.log("Index data fetched:", data);
+    // console.log("Index data fetched:", data);
     return data;
   } catch (err) {
     // Convert network or other errors into a Response so the router can handle them.
