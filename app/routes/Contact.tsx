@@ -75,9 +75,9 @@ const contactInfo = useLoaderData<ContactLoaderResponse>();
       />
 
       <section className="bg-white">
-        <div className="container mx-auto grid lg:grid-cols-2 py-20 gap-y-10">
+        <div className="container mx-auto grid lg:grid-cols-2 py-20 gap-y-10" style={{"overflow": "visible", "position": "relative"}}>
           <FadeRight>
-            <div className="formDetails text-[#494949] max-w-max max-h-max mx-auto  rounded-r-[30px] relative ">
+            <div className="formDetails text-[#494949] max-w-max max-h-max mx-auto  rounded-r-[30px] relative " style={{ "position":"sticky" , "top": "var(--headerHeight)" }}>
               <p className="grid gap-6 mt-8">
                 <span>
                   <strong className="font-bold">

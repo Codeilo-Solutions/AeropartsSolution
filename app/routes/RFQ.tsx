@@ -69,9 +69,9 @@ const contactInfo = useLoaderData<RfqLoaderResponse>();
       />
 
       <section className="min-h-screen bg-white">
-        <div className="container mx-auto grid lg:grid-cols-2 py-20 gap-y-10">
+        <div className="container mx-auto grid lg:grid-cols-2 py-20 gap-y-10" style={{"overflow": "visible", "position": "relative"}}>
           <FadeRight>
-            <div className="formDetails bg-grey text-[#494949] lg:w-[85%] max-h-max p-20 pr-24 pl-0 rounded-r-[30px] relative after:content-[''] after:absolute after:w-full after:h-full after:top-0 after:left-1 after:-z-1 after:bg-grey after:-translate-x-full">
+            <div className="formDetails bg-grey text-[#494949] lg:w-[85%] max-h-max p-20 pr-24 pl-0 rounded-r-[30px] relative after:content-[''] after:absolute after:w-full after:h-full after:top-0 after:left-1 after:-z-1 after:bg-grey after:-translate-x-full" style={{ "position":"sticky" , "top": "var(--headerHeight)" }}>
               <h1 className="text-primary font-black text-5xl">
                 {contactInfo1.title}
               </h1>
