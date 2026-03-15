@@ -30,7 +30,7 @@ const SolutionSection = ({
       title: "Freight Solutions",
       content:
         "Our in-house freight division provides end-to-end logistics for aviation parts and equipment.",
-      link: "https://bflexee.ae/",
+      link: "https://goflexy.ae/",
     },
   ];
   return (
@@ -53,11 +53,11 @@ const SolutionSection = ({
                 <h1 className="text-2xl font-normal">{data.title}</h1>
                 <p className="text-sm font-normal">{data.content}</p>
                 <a
-                  className={`contents ${data.link === null  ? "invisible pointer-events-none" : null} `}
+                  className={`contents ${data.link === null ? "invisible pointer-events-none" : null} `}
                   href={data.link}
                   target="_blank"
                 >
-              {data.link }
+                  {data.link}
                   <img
                     src={arrowIcon}
                     width={32}
